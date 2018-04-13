@@ -32,11 +32,11 @@
                 </option>
                 <option>
                     <name>Input description</name>
-                    <state></state>
+                    <state>Full formatting, with multibyte support.</state>
                 </option>
                 <option>
                     <name>Output description</name>
-                    <state></state>
+                    <state>Full formatting, with multibyte support.</state>
                 </option>
                 <option>
                     <name>GOutputBinary</name>
@@ -637,15 +637,15 @@
                 <option>
                     <name>OOCOutputFormat</name>
                     <version>3</version>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OCOutputOverride</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>OOCOutputFile</name>
-                    <state>Project.srec</state>
+                    <state>BSPv2.2.hex</state>
                 </option>
                 <option>
                     <name>OOCCommandLineProducer</name>
@@ -653,7 +653,7 @@
                 </option>
                 <option>
                     <name>OOCObjCopyEnable</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
             </data>
         </settings>
@@ -1038,7 +1038,19 @@
                 <name>$PROJ_DIR$\..\Src\adc.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Inc\bsp_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_dac5571.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_DataTransmissionLayer.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Src\bsp_digitalfloodcontrol.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_ProtocolLayer.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\dma.c</name>

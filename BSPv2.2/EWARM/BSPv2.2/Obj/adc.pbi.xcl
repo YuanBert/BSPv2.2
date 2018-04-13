@@ -1,17 +1,17 @@
-"C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\Src\adc.c"
+"E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Src\adc.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\EWARM/../Inc
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Inc
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Device/ST/STM32F1xx/Include
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Device/ST/STM32F1xx/Include
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Include
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\CMSIS\Core\Include
 -I
@@ -21,15 +21,15 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\Inc
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Inc
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\Drivers\CMSIS\Device\ST\STM32F1xx\Include
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\CMSIS\Device\ST\STM32F1xx\Include
 -I
-C:\Users\bertz\Desktop\BSPv2.2\BSPv2.2\Drivers\CMSIS\Include
+E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\CMSIS\Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\CMSIS\Core\Include
 -I

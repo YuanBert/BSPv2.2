@@ -55,6 +55,24 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+extern volatile uint16_t       TiggerTimeCnt;
+extern volatile uint16_t	   TiggerTimeSum;
+extern volatile uint16_t       Vnormal;
+extern volatile uint16_t       Vnormalt;
+extern volatile uint8_t        Vthreshold;
+extern volatile uint16_t       Vbase;          //基础电流值
+extern volatile uint16_t	   Vdelta;
+
+extern          uint16_t      VbaseBuffer[512];
+extern volatile uint16_t      VbaseCnt;
+extern volatile uint8_t       VbaseUpdataflag; 
+extern volatile uint8_t       SettingVbaseValeFlag;
+
+
+volatile uint16_t ADCSampleBuffer[512];
+volatile uint32_t ADCBuffer[256];
+
+uint32_t Vadcdata;
 
 /* USER CODE END PV */
 
@@ -114,7 +132,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
+  
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -234,6 +253,82 @@ static void MX_NVIC_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
+{
+	UNUSED(htim);
+	uint16_t i;
+        
+        /* 常开的定时器中断，50us进入一次，对光栅状态进行检测 */
+        if(htim3.Instance == htim->Instance)
+        {
+          
+          return;
+        }
+        
+        /* 非常开的定时器中断，该中断在接收到开闸指令后才打开，用来检测地感和
+        压力波传感器信号，在检测到杆到达水平位置之后就直接关闭该中断，该中断每1ms
+        进入一次，开闸的调速也将在改中断中完成*/
+        if(htim4.Instance == htim->Instance)
+        {
+            return;
+        }
+        
+        
+        /* 常开中断，每200ms进入一次，用以对log日志进行上报，系统自检等功能，同时
+        也来兼顾来车控灯的作用 */
+        
+        if(htim5.Instance == htim->Instance)
+        {
+          
+            return;
+        }
+        
+        
+        
+        /* 此定时器中断只有关闸的时候才会起作用 */
+	if(htim6.Instance == htim->Instance)
+	{
+                for(i = 0; i < 256;)
+                {
+                    Vadcdata += ADCBuffer[i];
+                    i += 2;
+		 }
+		 Vnormal = (uint16_t)(Vadcdata >> 7);
+                
+                 if(0 == SettingVbaseValeFlag)
+                 {
+                    if(Vnormal > Vbase)
+                    {
+			
+                         Vdelta = Vnormal - Vbase;
+			
+                    }
+                    else
+                    {
+                          Vdelta = Vbase - Vnormal;                           
+                    }
+
+                    if(Vdelta > Vthreshold)
+                    {
+                            TiggerTimeCnt++;
+                    }
+                    else
+                    {
+                          TiggerTimeCnt = 0;
+                    }
+                 }
+
+		 if(0 == TiggerTimeCnt)
+		 {
+			VbaseBuffer[VbaseCnt++] = Vnormal;
+		 }
+		 else
+		 {
+			VbaseCnt = 0;
+		 }	 
+	}	
+}
+
 
 /* USER CODE END 4 */
 

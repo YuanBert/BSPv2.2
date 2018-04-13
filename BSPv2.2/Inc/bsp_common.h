@@ -113,6 +113,28 @@ struct sGpioStatusDetection
 
 typedef struct sGpioStatusDetection  GPIOSTATUSDETECTION, *pGPIOSTATUSDETECTION;
 
+   typedef struct s_MotorMachine{
+     uint8_t  VerticalRasterState;  
+     uint8_t  HorizontalRasterState;
+     uint8_t  RunningState;
+     uint8_t  RunDir;
+     uint16_t SetRunSpeed;
+     uint16_t CurrentRunSpeed;
+     uint8_t  StartFlag;
+     uint8_t  VerFilterCnt;
+     uint8_t  HorFilterCnt;
+     uint8_t  Motor_Error;
+     uint8_t  GentleSensorFlag;
+     uint8_t  RadarSensorFlag;
+     uint8_t  AirSensorFlag;
+     uint8_t  RemoteControFlag;
+     uint8_t  OpenFlag;
+     uint8_t  CloseFlag;
+     uint8_t  EncounteredFlag;
+     uint8_t  DigitalAntiSmashingFlag;
+     uint16_t  StepCnt;
+   }MOTORMACHINE,*pMOTORMACHINE;
+
 #ifdef __cplusplus
 }
 #endif

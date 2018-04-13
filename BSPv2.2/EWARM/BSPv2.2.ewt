@@ -1199,7 +1199,19 @@
                 <name>$PROJ_DIR$\..\Src\adc.c</name>
             </file>
             <file>
+                <name>$PROJ_DIR$\..\Inc\bsp_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_dac5571.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_DataTransmissionLayer.c</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\..\Src\bsp_digitalfloodcontrol.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_ProtocolLayer.c</name>
             </file>
             <file>
                 <name>$PROJ_DIR$\..\Src\dma.c</name>
