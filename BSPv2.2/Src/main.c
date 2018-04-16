@@ -48,6 +48,10 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+#include "bsp_common.h"
+#include "bsp_DataTransmissionLayer.h"
+#include "bsp_ProtocolLayer.h"
+#include "bsp_digitalfloodcontrol.h"
 
 /* USER CODE END Includes */
 
@@ -56,21 +60,40 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 extern volatile uint16_t       TiggerTimeCnt;
-extern volatile uint16_t	   TiggerTimeSum;
+extern volatile uint16_t       TiggerTimeSum;
 extern volatile uint16_t       Vnormal;
 extern volatile uint16_t       Vnormalt;
 extern volatile uint8_t        Vthreshold;
 extern volatile uint16_t       Vbase;          //基础电流值
-extern volatile uint16_t	   Vdelta;
+extern volatile uint16_t       Vdelta;
 
 extern          uint16_t      VbaseBuffer[512];
 extern volatile uint16_t      VbaseCnt;
 extern volatile uint8_t       VbaseUpdataflag; 
 extern volatile uint8_t       SettingVbaseValeFlag;
 
+MOTORMACHINE gMotorMachine;
+
+
 
 volatile uint16_t ADCSampleBuffer[512];
 volatile uint32_t ADCBuffer[256];
+
+volatile uint8_t  gOpenBarTimeoutFlag;
+volatile uint8_t  gOpenBarTimerFlag;
+volatile uint32_t gOpenBarTimerCnt;
+
+volatile uint8_t gBarFirstArriveOpenedPosinFlag;
+volatile uint8_t gBarFirstArriveClosedPosionFlag;
+
+volatile uint8_t gOpenFlag;
+
+volatile uint8_t gCarEnteredFlag;
+GPIOSTRUCT gGentleSensorGpio;
+
+GPIOSTRUCT gHorGpio;
+GPIOSTRUCT gVerGpio;
+
 
 uint32_t Vadcdata;
 
@@ -82,7 +105,9 @@ static void MX_NVIC_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+void bsp_GpioStructInit(void);
+void bsp_SendCarEnterFlag(void);
+void bsp_SendCarEnterTimeroutFlag(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -144,6 +169,40 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+	
+  	if(1 == gCarEnteredFlag)
+  	{
+          gOpenBarTimerFlag = 0;
+		  gOpenBarTimerCnt = 0;
+		  gOpenBarTimeoutFlag = 0;
+		  gOpenFlag = 4;//
+		  /* 发送车辆入场指令 */
+		  bsp_SendCarEnterFlag();
+		  gCarEnteredFlag = 0;
+  	}
+	
+	if(1 == gBarFirstArriveOpenedPosinFlag)
+  	{
+		if(2 == gOpenFlag)
+		{
+			gOpenFlag = 3;	//表示处在垂直位置
+		}
+		gBarFirstArriveOpenedPosinFlag = 0;	
+	}
+
+	if(1 == gBarFirstArriveClosedPosionFlag)
+	{
+		gOpenFlag = 0;
+		
+		if(1 == gOpenBarTimeoutFlag)
+		{
+		  gOpenBarTimeoutFlag = 0;
+		  /* 发送车辆入场超时指令 */
+		  bsp_SendCarEnterTimeroutFlag();
+		}
+		
+		gBarFirstArriveClosedPosionFlag = 0;
+	}
 
   }
   /* USER CODE END 3 */
@@ -261,7 +320,65 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         /* 常开的定时器中断，50us进入一次，对光栅状态进行检测 */
         if(htim3.Instance == htim->Instance)
         {
-          
+          gHorGpio.CurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
+		  gVerGpio.CurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
+
+		  if(0 == gHorGpio.CurrentReadVal && 0 == gHorGpio.LastReadVal)
+		  {
+			 gHorGpio.FilterCnt++;
+			 if(gHorGpio.FilterCnt> gHorGpio.FilterCntSum)
+			 {
+				gMotorMachine.HorizontalRasterState = 1;
+				gHorGpio.GpioState = 1;
+				gHorGpio.FilterCnt = 0;
+				
+				if(DOWNDIR == gMotorMachine.RunDir)
+				{
+					BSP_MotorStop(); //停止电机转动
+					gMotorMachine.RunDir = UPDIR;//修改方向标记位
+					gMotorMachine.RunningState = 0;//修改运行状态
+					gBarFirstArriveClosedPosionFlag = 1;//
+				}
+				
+				
+			 }
+			 else
+			 {
+				gMotorMachine.HorizontalRasterState = 0;
+				gHorGpio.GpioState = 0;
+				gHorGpio.FilterCnt = 0;
+			 }
+			 gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
+
+			 if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
+			 {
+				gVerGpio.FilterCnt++;
+				if(gVerGpio.FilterCnt > gVerGpio.FilterCntSum)
+				{
+					gVerGpio.GpioState = 1;
+					gVerGpio.FilterCnt = 0;
+					gMotorMachine.VerticalRasterState = 1;
+					if(UPDIR == gMotorMachine.RunDir)
+					{
+						BSP_MotorStop();
+						gMotorMachine.RunDir = DOWNDIR;//修改方向标记位
+						gMotorMachine.RunningState = 0;//改变运行状态标记位
+						gOpenBarTimerFlag = 1;
+						gBarFirstArriveOpenedPosinFlag = 1;
+					}
+					
+				}
+			 }
+			 else
+			 {
+				gMotorMachine.VerticalRasterState = 0;
+				gVerGpio.GpioState = 0;
+				gVerGpio.FilterCnt = 0;
+			 }
+
+			 gVerGpio.LastReadVal = gVerGpio.CurrentReadVal;
+		  }
+		  
           return;
         }
         
@@ -270,7 +387,39 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         进入一次，开闸的调速也将在改中断中完成*/
         if(htim4.Instance == htim->Instance)
         {
-            return;
+			/* 地感检测，起到防砸和判断车辆是否进入的作用 */
+		  gGentleSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
+          if(0 == gGentleSensorGpio.CurrentReadVal && 0 == gGentleSensorGpio.LastReadVal)
+          {
+			if(0 == gGentleSensorGpio.GpioState)
+			{
+				gGentleSensorGpio.FilterCnt++;
+				if(gGentleSensorGpio.FilterCnt > gGentleSensorGpio.FilterCntSum)
+				{
+					gGentleSensorGpio.GpioState = 1;
+					gGentleSensorGpio.FilterCnt = 0;
+					/* 添加日志文档       */
+					
+				}
+			}
+          }
+		  else
+		  {
+			if(gGentleSensorGpio.GpioState)
+			{
+				gCarEnteredFlag = 1;
+				
+				/* 添加日志文档 */
+			}
+			gGentleSensorGpio.GpioState = 0;
+			gGentleSensorGpio.FilterCnt = 0;
+			gGentleSensorGpio.LastReadVal = gGentleSensorGpio.CurrentReadVal;
+
+			/* 空气波检测 */
+
+			
+		  }
+          return;
         }
         
         
@@ -280,7 +429,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         if(htim5.Instance == htim->Instance)
         {
           
-            return;
+			if(1 == gOpenBarTimerFlag)
+			{
+				gOpenBarTimerCnt++;
+				if(gOpenBarTimerCnt > 50)	//等待时间为10秒钟，超过10秒钟认为是超时
+				{
+					gOpenBarTimeoutFlag = 1;
+					gOpenBarTimerCnt = 0;
+					gOpenBarTimerFlag = 0;
+					gOpenFlag = 4;
+				}
+			}
+			return;
         }
         
         
@@ -327,6 +487,35 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 			VbaseCnt = 0;
 		 }	 
 	}	
+}
+
+
+void bsp_SendCarEnterFlag(void)
+{
+	uint8_t pData[7];
+	pData[0] = 0x5B;
+	pData[1] = 0xE3;
+	pData[3] = 0x00;
+	pData[4] = 0x00;
+	pData[6] = 0x5D;
+	pData[2] = 0x00;
+	pData[5] = 0xE3;
+
+	BSP_SendDataToDriverBoard(pData,7,0xFFFF);
+	return ;
+}
+void bsp_SendCarEnterTimeroutFlag(void)
+{
+	uint8_t pData[7];
+	pData[0] = 0x5B;
+	pData[1] = 0xE3;
+	pData[3] = 0x00;
+	pData[4] = 0x00;
+	pData[6] = 0x5D;
+	pData[2] = 0x01;
+	pData[5] = 0xE2;
+	BSP_SendDataToDriverBoard(pData,7,0xFFFF);
+	return;
 }
 
 

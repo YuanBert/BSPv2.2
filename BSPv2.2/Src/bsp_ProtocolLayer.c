@@ -49,7 +49,8 @@
 #include "bsp_ProtocolLayer.h"
 #include "bsp_DataTransmissionLayer.h"
 
-extern uint8_t 		   gRevOpenFlag;
+//extern uint8_t 		   gRevOpenFlag;
+extern volatile uint8_t gOpenFlag;
 //extern MOTORMACHINE    gMotorMachine;
 
 extern USARTRECIVETYPE     DriverBoardUsartType;
@@ -344,7 +345,7 @@ BSP_StatusTypeDef BSP_HandingDriverBoardRequest(void)
       return state;
     }
     
-	  switch ((DriverBoardRevDataStruct.CmdType) & 0xF0)
+    switch ((DriverBoardRevDataStruct.CmdType) & 0xF0)
     {
 	    
     case 0xB0:sNeedToAckStruct.AckCmdCode[tempTableID] = 0xAB;
@@ -437,27 +438,21 @@ BSP_StatusTypeDef BSP_HandingDriverBoardRequest(void)
 	
 	  if (1 == SendOpenFlag.Flag)
 	  {
-		/*  
-                if (0 == gMotorMachine.VerticalRasterState)
-		  {
-			  gMotorMachine.StartFlag = 1;
-			  gMotorMachine.OpenFlag = 1;
-			  gMotorMachine.CloseFlag = 0;
-			  gMotorMachine.RunDir = UPDIR;
-
-			  /* 标记接收到开闸指令标记位 */
-               /*
-			  gRevOpenFlag = 1;
+                if(0 == gOpenFlag)  
+                {
+                    gOpenFlag= 1;
 			  
-			  sNeedToAckStruct.AckCodeL[Table.tab[SendOpenFlag.position]] = 0x00;
-		  }
-		  else
-		  {
-			  sNeedToAckStruct.AckCodeL[SendOpenFlag.position] = 0x01;
-		  }
+                    sNeedToAckStruct.AckCodeL[Table.tab[SendOpenFlag.position]] = 0x00;
+		 }
+		 else
+		 {
+                    sNeedToAckStruct.AckCodeL[SendOpenFlag.position] = 0x01;
+		 }
 		  
-		  Table.tab[SendOpenFlag.position] = 0x02;
-              */
+		Table.tab[SendOpenFlag.position] = 0x02;
+                
+                SendOpenFlag.Flag = 0;
+                SendOpenFlag.position = 0;
 	  }
 	  
 	  
