@@ -78,7 +78,7 @@ MOTORMACHINE gMotorMachine;
 
 
 volatile uint16_t ADCSampleBuffer[512];
-volatile uint16_t ADCBuffer[1024];
+volatile uint32_t ADCBuffer[256];
 
 volatile uint8_t  gLogTimerFlag;
 volatile uint32_t gLogTimerCnt;
@@ -95,8 +95,6 @@ volatile uint8_t gBarFirstArriveClosedPosionFlag;
 
 volatile uint8_t gOpenFlag;
 volatile uint8_t gObstructFlag;
-
-volatile uint8_t gHorCloseFlag;
 
 volatile uint8_t gCarEnteredFlag;
 GPIOSTRUCT gGentleSensorGpio;
@@ -218,7 +216,7 @@ int main(void)
 		}
 		gBarFirstArriveOpenedPosinFlag = 0;
 #ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag\r\n",35, 0xFFFF);
+		BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag\r\n",35, 0xFFFF);
 #endif
 	}
 
@@ -233,7 +231,7 @@ int main(void)
 		UpdateVbaseValue();
 		gBarFirstArriveClosedPosionFlag = 0;
 #ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
+		BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
 #endif		
 	}
         
@@ -375,19 +373,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 					HAL_TIM_Base_Stop_IT(&htim4);
 					HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
 					BSP_MotorStop(); //停止电机转动
-                    gOpenFlag = 0;
+                                        gOpenFlag = 0;
 					gMotorMachine.RunDir = UPDIR;//修改方向标记位
 					gMotorMachine.RunningState = 0;//修改运行状态
 					gBarFirstArriveClosedPosionFlag = 1;//
-					if(SettingVbaseValeFlag)
-					{
-						gHorCloseFlag++;
-						if(gHorCloseFlag > 2)
-						{
-							gHorCloseFlag = 0;
-							SettingVbaseValeFlag = 0;
-						}
-					}
 				}
 				
 				
@@ -555,14 +544,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 
 		 if(0 == TiggerTimeCnt)
 		 {
-			
+			VbaseBuffer[VbaseCnt++] = Vnormal;
 			
 			if(VbaseCnt > 511) //如果采样超过512个点则丢弃
 			{
-				VbaseCnt = 511;
+				Vbase = 511;
 			}
-                        
-                        VbaseBuffer[VbaseCnt++] = Vnormal;
 		 }
 		 else
 		 {

@@ -3,7 +3,7 @@
 #include "bsp_common.h"
 #include "bsp_DataTransmissionLayer.h"
 
-
+#define __Debug__
 
 uint8_t     Vthreshold;
 uint16_t    Vbase;          //基础电流值
@@ -45,7 +45,7 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 
 	VbaseCnt = 0;
 	TiggerTimeCnt = 0;
-	//SettingVbaseValeFlag = 0;	//该标记位是初次使用标记的，初次上电的时候，如要进行Vbase的自动采样，此时数字防砸是禁用的
+	SettingVbaseValeFlag = 0;	//该标记位是初次使用标记的，初次上电的时候，如要进行Vbase的自动采样，此时数字防砸是禁用的
 	
 	return state;
 }
@@ -54,8 +54,8 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 BSP_StatusTypeDef DigitalfloodInit(void)
 {
   BSP_StatusTypeDef  state = BSP_OK;
-  Vthreshold = 0x5A;  	//deflaut tirgger I is 3A
-  TiggerTimeSum = 0x40; //默认反映精度为0.64s
+  Vthreshold = 0x3E;  	//deflaut tirgger I is 2A
+  TiggerTimeSum = 0x19; //默认反映精度为0.25s
   SettingVbaseValeFlag = 1;
 
   VbaseCnt = 0;

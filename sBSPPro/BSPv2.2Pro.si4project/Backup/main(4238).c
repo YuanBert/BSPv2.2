@@ -78,7 +78,7 @@ MOTORMACHINE gMotorMachine;
 
 
 volatile uint16_t ADCSampleBuffer[512];
-volatile uint16_t ADCBuffer[1024];
+volatile uint32_t ADCBuffer[256];
 
 volatile uint8_t  gLogTimerFlag;
 volatile uint32_t gLogTimerCnt;
@@ -95,8 +95,6 @@ volatile uint8_t gBarFirstArriveClosedPosionFlag;
 
 volatile uint8_t gOpenFlag;
 volatile uint8_t gObstructFlag;
-
-volatile uint8_t gHorCloseFlag;
 
 volatile uint8_t gCarEnteredFlag;
 GPIOSTRUCT gGentleSensorGpio;
@@ -171,9 +169,7 @@ int main(void)
   bsp_GpioStructInit();
   DigitalfloodInit();
   
-  BSP_DriverBoardProtocolInit();
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
-  
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim5);
   
@@ -187,16 +183,13 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-  BSP_HandingUartDataFromDriverBoard();
-  BSP_HandingDriverBoardRequest();
-  BSP_SendAckData();
 
   	if(gLogTimerFlag)
   	{
 		gLogTimerFlag = 0;
-		//BSP_SendByteToDriverBoard('A',0xFFFF);
+		BSP_SendByteToDriverBoard(0xAA,0xFFFF);
 	}
-        
+	
   	if(1 == gCarEnteredFlag)
   	{
           gOpenBarTimerFlag = 0;
@@ -216,10 +209,7 @@ int main(void)
 			VbaseCnt = 0;   //归零计数
 			TiggerTimeCnt = 0;//
 		}
-		gBarFirstArriveOpenedPosinFlag = 0;
-#ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag\r\n",35, 0xFFFF);
-#endif
+		gBarFirstArriveOpenedPosinFlag = 0;	
 	}
 
 	if(1 == gBarFirstArriveClosedPosionFlag)
@@ -232,12 +222,7 @@ int main(void)
 		}
 		UpdateVbaseValue();
 		gBarFirstArriveClosedPosionFlag = 0;
-#ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
-#endif		
 	}
-        
-        
 
 	BSP_MotorCheck();
 	BSP_MotorAction();
@@ -355,7 +340,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	UNUSED(htim);
 	uint16_t i;
         
-        /* 常开的定时器中断，100us进入一次，对光栅状态进行检测 */
+        /* 常开的定时器中断，50us进入一次，对光栅状态进行检测 */
         if(htim3.Instance == htim->Instance)
         {
           gHorGpio.CurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
@@ -375,30 +360,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 					HAL_TIM_Base_Stop_IT(&htim4);
 					HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
 					BSP_MotorStop(); //停止电机转动
-                    gOpenFlag = 0;
+                                        gOpenFlag = 0;
 					gMotorMachine.RunDir = UPDIR;//修改方向标记位
 					gMotorMachine.RunningState = 0;//修改运行状态
 					gBarFirstArriveClosedPosionFlag = 1;//
-					if(SettingVbaseValeFlag)
-					{
-						gHorCloseFlag++;
-						if(gHorCloseFlag > 2)
-						{
-							gHorCloseFlag = 0;
-							SettingVbaseValeFlag = 0;
-						}
-					}
 				}
 				
 				
 			 }
-		  	}
-			else
-			{
+			 else
+			 {
 				gMotorMachine.HorizontalRasterState = 0;
 				gHorGpio.GpioState = 0;
 				gHorGpio.FilterCnt = 0;
-			}
+			 }
 			 gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
 
 			 if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
@@ -438,7 +413,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 			 }
 
 			 gVerGpio.LastReadVal = gVerGpio.CurrentReadVal;
-		 
+		  }
 		  
           return;
         }
@@ -555,14 +530,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 
 		 if(0 == TiggerTimeCnt)
 		 {
-			
+			VbaseBuffer[VbaseCnt++] = Vnormal;
 			
 			if(VbaseCnt > 511) //如果采样超过512个点则丢弃
 			{
-				VbaseCnt = 511;
+				Vbase = 511;
 			}
-                        
-                        VbaseBuffer[VbaseCnt++] = Vnormal;
 		 }
 		 else
 		 {
@@ -604,18 +577,18 @@ void bsp_GpioStructInit(void)
 	gVerGpio.LastReadVal = 0;
 	gVerGpio.FilterCnt = 0;
 	gVerGpio.GpioState = 0;
-	gVerGpio.FilterCntSum = 15;
+	gVerGpio.FilterCntSum = 20;
 
 
 	gHorGpio.LastReadVal = 0;
 	gHorGpio.FilterCnt = 0;
 	gHorGpio.GpioState = 0;
-	gHorGpio.FilterCntSum = 15;
+	gHorGpio.FilterCntSum = 20;
 
 	gGentleSensorGpio.LastReadVal = 0;
 	gGentleSensorGpio.FilterCnt = 0;
 	gGentleSensorGpio.GpioState = 0;
-	gGentleSensorGpio.FilterCntSum = 15;
+	gGentleSensorGpio.FilterCntSum = 30;
 
 	gBarFirstArriveOpenedPosinFlag = 0;
 	gBarFirstArriveClosedPosionFlag = 0;

@@ -78,7 +78,7 @@ MOTORMACHINE gMotorMachine;
 
 
 volatile uint16_t ADCSampleBuffer[512];
-volatile uint16_t ADCBuffer[1024];
+volatile uint32_t ADCBuffer[256];
 
 volatile uint8_t  gLogTimerFlag;
 volatile uint32_t gLogTimerCnt;
@@ -95,8 +95,6 @@ volatile uint8_t gBarFirstArriveClosedPosionFlag;
 
 volatile uint8_t gOpenFlag;
 volatile uint8_t gObstructFlag;
-
-volatile uint8_t gHorCloseFlag;
 
 volatile uint8_t gCarEnteredFlag;
 GPIOSTRUCT gGentleSensorGpio;
@@ -171,7 +169,6 @@ int main(void)
   bsp_GpioStructInit();
   DigitalfloodInit();
   
-  BSP_DriverBoardProtocolInit();
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
   
   HAL_TIM_Base_Start_IT(&htim3);
@@ -187,22 +184,21 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-  BSP_HandingUartDataFromDriverBoard();
-  BSP_HandingDriverBoardRequest();
-  BSP_SendAckData();
 
   	if(gLogTimerFlag)
   	{
 		gLogTimerFlag = 0;
-		//BSP_SendByteToDriverBoard('A',0xFFFF);
+		BSP_SendByteToDriverBoard('A',0xFFFF);
 	}
         
+	if(1)
+        {
   	if(1 == gCarEnteredFlag)
   	{
           gOpenBarTimerFlag = 0;
 		  gOpenBarTimerCnt = 0;
 		  gOpenBarTimeoutFlag = 0;
-		  gOpenFlag = 4;//
+		  //gOpenFlag = 4;//
 		  /* 发送车辆入场指令 */
 		  bsp_SendCarEnterFlag();
 		  gCarEnteredFlag = 0;
@@ -217,9 +213,9 @@ int main(void)
 			TiggerTimeCnt = 0;//
 		}
 		gBarFirstArriveOpenedPosinFlag = 0;
-#ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag\r\n",35, 0xFFFF);
-#endif
+//#ifdef __Debug__
+		BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag\r\n",35, 0xFFFF);
+//#endif
 	}
 
 	if(1 == gBarFirstArriveClosedPosionFlag)
@@ -233,14 +229,17 @@ int main(void)
 		UpdateVbaseValue();
 		gBarFirstArriveClosedPosionFlag = 0;
 #ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
+		BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
 #endif		
 	}
+        }
         
-        
+        if(0)
+        {
 
 	BSP_MotorCheck();
 	BSP_MotorAction();
+        }
 	
   }
   /* USER CODE END 3 */
@@ -375,30 +374,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 					HAL_TIM_Base_Stop_IT(&htim4);
 					HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
 					BSP_MotorStop(); //停止电机转动
-                    gOpenFlag = 0;
+                                        gOpenFlag = 0;
 					gMotorMachine.RunDir = UPDIR;//修改方向标记位
 					gMotorMachine.RunningState = 0;//修改运行状态
 					gBarFirstArriveClosedPosionFlag = 1;//
-					if(SettingVbaseValeFlag)
-					{
-						gHorCloseFlag++;
-						if(gHorCloseFlag > 2)
-						{
-							gHorCloseFlag = 0;
-							SettingVbaseValeFlag = 0;
-						}
-					}
 				}
 				
 				
 			 }
-		  	}
-			else
-			{
+			 else
+			 {
 				gMotorMachine.HorizontalRasterState = 0;
 				gHorGpio.GpioState = 0;
 				gHorGpio.FilterCnt = 0;
-			}
+			 }
 			 gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
 
 			 if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
@@ -438,7 +427,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 			 }
 
 			 gVerGpio.LastReadVal = gVerGpio.CurrentReadVal;
-		 
+		  }
 		  
           return;
         }
@@ -555,14 +544,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 
 		 if(0 == TiggerTimeCnt)
 		 {
-			
+			VbaseBuffer[VbaseCnt++] = Vnormal;
 			
 			if(VbaseCnt > 511) //如果采样超过512个点则丢弃
 			{
-				VbaseCnt = 511;
+				Vbase = 511;
 			}
-                        
-                        VbaseBuffer[VbaseCnt++] = Vnormal;
 		 }
 		 else
 		 {

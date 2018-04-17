@@ -1,7 +1,5 @@
 #include "bsp_motor.h"
 #include "tim.h"
-#include "bsp_DataTransmissionLayer.h"
-
 
 extern volatile uint16_t		TiggerTimeSum;
 extern volatile uint16_t		TiggerTimeCnt;
@@ -81,10 +79,10 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 	BSP_StatusTypeDef state  = BSP_OK;
 
 	//地感触发是不执行操作
-	//if(1 == gGentleSensorGpio.GpioState)
-	//{
-	//	return state;
-	//}
+	if(1 == gGentleSensorGpio.GpioState)
+	{
+		return state;
+	}
 
 	
 	
@@ -99,9 +97,6 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 				gMotorMachine.RunningState = 0;
 				BSP_MotorStop();
 				gOpenFlag = 1;
-#ifdef __Debug__
-                                BSP_SendDataToDriverBoard((uint8_t*)"\r\n TiggerTimeCnt > TiggerTimeSum\r\n",35, 0xFFFF);
-#endif
 				/* 写日志信息，报告遇阻信息 */
 
 				return state;
@@ -116,10 +111,6 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 		if(0 == gMotorMachine.RunningState)
 		{
 			gOpenFlag = 4; //执行向下的操作
-                        if(1 == gMotorMachine.StartFlag)
-                        {
-                          gMotorMachine.StartFlag = 0;
-                        }
 			return state;
 		}
 	}
@@ -145,9 +136,7 @@ BSP_StatusTypeDef      BSP_MotorAction(void)
 		HAL_TIM_Base_Start_IT(&htim4);
 		return state;
                 
-//#ifdef __Debug__
-		BSP_SendDataToDriverBoard((uint8_t*)"\r\n BSP_MotorAction gOpenFlag = 1\r\n",35, 0xFFFF);
-//#endif
+#ifdef __Debug__
                 
 	}
 

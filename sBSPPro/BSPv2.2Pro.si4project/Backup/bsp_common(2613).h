@@ -45,9 +45,6 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_hal.h"
-//#include "bsp_DataTransmissionLayer.h"
-
-#define __Debug__
 
 #define RunningLED_OFF                  GPIO_PIN_SET
 #define RunningLED_ON                   GPIO_PIN_RESET

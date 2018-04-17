@@ -46,6 +46,7 @@ extern "C" {
 #include "main.h"
 #include "stm32f1xx_hal.h"
 #include "bsp_common.h"
+  
 #define DS_RX_LEN                    512      //Accept the buffer size
 #define BSP_RX_LEN					 DS_RX_LEN
   

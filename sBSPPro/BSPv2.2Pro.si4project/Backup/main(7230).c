@@ -78,7 +78,7 @@ MOTORMACHINE gMotorMachine;
 
 
 volatile uint16_t ADCSampleBuffer[512];
-volatile uint16_t ADCBuffer[1024];
+volatile uint32_t ADCBuffer[256];
 
 volatile uint8_t  gLogTimerFlag;
 volatile uint32_t gLogTimerCnt;
