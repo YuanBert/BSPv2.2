@@ -52,6 +52,7 @@
 #include "bsp_DataTransmissionLayer.h"
 #include "bsp_ProtocolLayer.h"
 #include "bsp_digitalfloodcontrol.h"
+#include "bsp_motor.h"
 
 /* USER CODE END Includes */
 
@@ -60,12 +61,12 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 extern volatile uint16_t       TiggerTimeCnt;
-extern volatile uint16_t       TiggerTimeSum;
-extern volatile uint16_t       Vnormal;
-extern volatile uint16_t       Vnormalt;
-extern volatile uint8_t        Vthreshold;
-extern volatile uint16_t       Vbase;          //基础电流值
-extern volatile uint16_t       Vdelta;
+extern  uint16_t       TiggerTimeSum;
+extern  uint16_t       Vnormal;
+extern  uint16_t       Vnormalt;
+extern  uint8_t        Vthreshold;
+extern  uint16_t       Vbase;          //基础电流值
+extern  uint16_t       Vdelta;
 
 extern          uint16_t      VbaseBuffer[512];
 extern volatile uint16_t      VbaseCnt;
@@ -79,14 +80,21 @@ MOTORMACHINE gMotorMachine;
 volatile uint16_t ADCSampleBuffer[512];
 volatile uint32_t ADCBuffer[256];
 
+volatile uint8_t  gLogTimerFlag;
+volatile uint32_t gLogTimerCnt;
+
 volatile uint8_t  gOpenBarTimeoutFlag;
 volatile uint8_t  gOpenBarTimerFlag;
 volatile uint32_t gOpenBarTimerCnt;
+
+volatile uint8_t gOpenSpeedTimerFlag;
+volatile uint8_t gOpenSpeedTimerCnt;
 
 volatile uint8_t gBarFirstArriveOpenedPosinFlag;
 volatile uint8_t gBarFirstArriveClosedPosionFlag;
 
 volatile uint8_t gOpenFlag;
+volatile uint8_t gObstructFlag;
 
 volatile uint8_t gCarEnteredFlag;
 GPIOSTRUCT gGentleSensorGpio;
@@ -122,7 +130,6 @@ void bsp_SendCarEnterTimeroutFlag(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration----------------------------------------------------------*/
@@ -156,8 +163,15 @@ int main(void)
 
   /* Initialize interrupts */
   MX_NVIC_Init();
+  
   /* USER CODE BEGIN 2 */
+  BSP_MotorInit();
+  bsp_GpioStructInit();
+  DigitalfloodInit();
+  
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
+  HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim5);
   
   /* USER CODE END 2 */
 
@@ -169,6 +183,12 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+
+  	if(gLogTimerFlag)
+  	{
+		gLogTimerFlag = 0;
+		BSP_SendByteToDriverBoard(0xAA,0xFFFF);
+	}
 	
   	if(1 == gCarEnteredFlag)
   	{
@@ -186,6 +206,8 @@ int main(void)
 		if(2 == gOpenFlag)
 		{
 			gOpenFlag = 3;	//表示处在垂直位置
+			VbaseCnt = 0;   //归零计数
+			TiggerTimeCnt = 0;//
 		}
 		gBarFirstArriveOpenedPosinFlag = 0;	
 	}
@@ -200,10 +222,13 @@ int main(void)
 		  /* 发送车辆入场超时指令 */
 		  bsp_SendCarEnterTimeroutFlag();
 		}
-		
+		UpdateVbaseValue();
 		gBarFirstArriveClosedPosionFlag = 0;
 	}
 
+	BSP_MotorCheck();
+	BSP_MotorAction();
+	
   }
   /* USER CODE END 3 */
 
@@ -326,7 +351,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		  if(0 == gHorGpio.CurrentReadVal && 0 == gHorGpio.LastReadVal)
 		  {
 			 gHorGpio.FilterCnt++;
-			 if(gHorGpio.FilterCnt> gHorGpio.FilterCntSum)
+			 if(gHorGpio.FilterCnt > gHorGpio.FilterCntSum)
 			 {
 				gMotorMachine.HorizontalRasterState = 1;
 				gHorGpio.GpioState = 1;
@@ -334,6 +359,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 				
 				if(DOWNDIR == gMotorMachine.RunDir)
 				{
+					HAL_TIM_Base_Stop_IT(&htim4);
+					HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
 					BSP_MotorStop(); //停止电机转动
 					gMotorMachine.RunDir = UPDIR;//修改方向标记位
 					gMotorMachine.RunningState = 0;//修改运行状态
@@ -367,6 +394,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 						gBarFirstArriveOpenedPosinFlag = 1;
 					}
 					
+					if(1 == gMotorMachine.StartFlag)	//如果初始位置在垂直位置，此可以进行自动复位
+					{
+						gMotorMachine.StartFlag = 0;
+						gOpenBarTimerFlag = 1;
+						
+						gOpenFlag = 3;	//表示处在垂直位置
+						VbaseCnt = 0;   //归零计数
+						TiggerTimeCnt = 0;//
+					}
+					
 				}
 			 }
 			 else
@@ -387,6 +424,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         进入一次，开闸的调速也将在改中断中完成*/
         if(htim4.Instance == htim->Instance)
         {
+			/* 调速 */
+		   gOpenSpeedTimerCnt ++;
+		   if(gOpenSpeedTimerCnt > 9)
+		   {
+				gOpenSpeedTimerFlag = 1;
+				gOpenSpeedTimerCnt = 0;
+		   }
+		   
 			/* 地感检测，起到防砸和判断车辆是否进入的作用 */
 		  gGentleSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
           if(0 == gGentleSensorGpio.CurrentReadVal && 0 == gGentleSensorGpio.LastReadVal)
@@ -428,7 +473,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         
         if(htim5.Instance == htim->Instance)
         {
-          
+			gLogTimerCnt++;
+			if(gLogTimerCnt > 10)
+			{
+				gLogTimerFlag = 1;
+				gLogTimerCnt = 0;
+			}
+			
 			if(1 == gOpenBarTimerFlag)
 			{
 				gOpenBarTimerCnt++;
@@ -445,7 +496,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         
         
         
-        /* 此定时器中断只有关闸的时候才会起作用 */
+        /* 此定时器中断只有关闸的时候才会起作用，开启中断后每10ms进入一次 */
 	if(htim6.Instance == htim->Instance)
 	{
                 for(i = 0; i < 256;)
@@ -481,6 +532,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		 if(0 == TiggerTimeCnt)
 		 {
 			VbaseBuffer[VbaseCnt++] = Vnormal;
+			
+			if(VbaseCnt > 511) //如果采样超过512个点则丢弃
+			{
+				Vbase = 511;
+			}
 		 }
 		 else
 		 {
@@ -516,6 +572,30 @@ void bsp_SendCarEnterTimeroutFlag(void)
 	pData[5] = 0xE2;
 	BSP_SendDataToDriverBoard(pData,7,0xFFFF);
 	return;
+}
+void bsp_GpioStructInit(void)
+{
+	gVerGpio.LastReadVal = 0;
+	gVerGpio.FilterCnt = 0;
+	gVerGpio.GpioState = 0;
+	gVerGpio.FilterCntSum = 20;
+
+
+	gHorGpio.LastReadVal = 0;
+	gHorGpio.FilterCnt = 0;
+	gHorGpio.GpioState = 0;
+	gHorGpio.FilterCntSum = 20;
+
+	gGentleSensorGpio.LastReadVal = 0;
+	gGentleSensorGpio.FilterCnt = 0;
+	gGentleSensorGpio.GpioState = 0;
+	gGentleSensorGpio.FilterCntSum = 30;
+
+	gBarFirstArriveOpenedPosinFlag = 0;
+	gBarFirstArriveClosedPosionFlag = 0;
+
+	
+	
 }
 
 

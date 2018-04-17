@@ -1,17 +1,19 @@
 #include "bsp_digitalfloodcontrol.h"
 #include "tim.h"
 #include "bsp_common.h"
+#include "bsp_DataTransmissionLayer.h"
 
+#define __Debug__
 
+uint8_t     Vthreshold;
+uint16_t    Vbase;          //基础电流值
+uint16_t	Vdelta;
+uint16_t    Vnormal;
+uint16_t    Vnormalt;
 
-volatile uint8_t          Vthreshold;
-volatile uint16_t         Vbase;          //基础电流值
-volatile uint16_t		  Vdelta;
-
-volatile uint16_t		TiggerTimeSum;
+uint16_t		TiggerTimeSum;
 volatile uint16_t		TiggerTimeCnt;
-volatile uint16_t       Vnormal;
-volatile uint16_t       Vnormalt;
+
 
 
 uint16_t	          VbaseBuffer[512];
@@ -25,24 +27,25 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 	BSP_StatusTypeDef  state = BSP_OK;
 	uint16_t i;
 	uint32_t sum;
-	if(0 == VbaseUpdataflag)
-	{
-		return state;
-	}
-	VbaseUpdataflag = 0;
+	uint8_t VbaseValueBuffer[2];
 
 	for(i = 0; i < VbaseCnt;i++)
 	{
 		sum += VbaseBuffer[i];
 	}
+		
+	Vbase = (uint16_t)(sum / VbaseCnt);  //更新Vbase值,采用的是均值滤波的方法，可以进行优化
+		/* 添加日志信息,将基准电流上报 */
 	
-	Vbase = (uint16_t)(sum / VbaseCnt);
+#ifdef __Debug__	
+	VbaseValueBuffer[0] = Vbase >> 8;
+	VbaseValueBuffer[1] = Vbase;
+	BSP_SendDataToDriverBoard(VbaseValueBuffer,2,0xFFFF);	
+#endif	
+
 	VbaseCnt = 0;
-        if(SettingVbaseValeFlag)
-        {
-          SettingVbaseValeFlag = 0;
-        }
-	/* 此处可以添加写日志信息，动态的上报电流值，来检测设备是否有问题 */
+	TiggerTimeCnt = 0;
+	SettingVbaseValeFlag = 0;	//该标记位是初次使用标记的，初次上电的时候，如要进行Vbase的自动采样，此时数字防砸是禁用的
 	
 	return state;
 }
@@ -54,7 +57,9 @@ BSP_StatusTypeDef DigitalfloodInit(void)
   Vthreshold = 0x3E;  	//deflaut tirgger I is 2A
   TiggerTimeSum = 0x19; //默认反映精度为0.25s
   SettingVbaseValeFlag = 1;
-  
+
+  VbaseCnt = 0;
+  Vbase = 0;
   
   return state;  
 }
@@ -80,6 +85,7 @@ BSP_StatusTypeDef CheckDigitalfloodontrol(void)
   BSP_StatusTypeDef  state = BSP_OK;
   //判断是否处在正常关闸状态，否返回
   HAL_TIM_Base_Start_IT(&htim6);
+  
   if(TiggerTimeCnt > TiggerTimeSum)
   {
 	Vnormal = 0;
