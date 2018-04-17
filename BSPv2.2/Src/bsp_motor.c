@@ -116,6 +116,7 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 		if(0 == gMotorMachine.RunningState)
 		{
 			gOpenFlag = 4; //执行向下的操作
+                        HAL_TIM_Base_Stop_IT(&htim6);
                         if(1 == gMotorMachine.StartFlag)
                         {
                           gMotorMachine.StartFlag = 0;
@@ -140,7 +141,7 @@ BSP_StatusTypeDef      BSP_MotorAction(void)
 		gMotorMachine.RunningState = 1;
 		gMotorMachine.RunDir = UPDIR;
 		BSP_MotorRun(gMotorMachine.RunDir);
-		BSP_MotorSpeedSet(100);
+		BSP_MotorSpeedSet(150);
 		gOpenFlag = 2;
 		HAL_TIM_Base_Start_IT(&htim4);
 		return state;
@@ -156,7 +157,7 @@ BSP_StatusTypeDef      BSP_MotorAction(void)
 		gMotorMachine.RunningState = 1;
 		gMotorMachine.RunDir = DOWNDIR;
 		BSP_MotorRun(gMotorMachine.RunDir);
-		BSP_MotorSpeedSet(100);
+		BSP_MotorSpeedSet(50);
 		gOpenFlag = 5; //处于关闸的状态
 		//打开TIM6定时器中断
 		HAL_TIM_Base_Start_IT(&htim6);

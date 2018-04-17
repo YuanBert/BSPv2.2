@@ -68,7 +68,7 @@ extern  uint16_t       Vthreshold;
 extern  uint16_t       Vbase;          //基础电流值
 extern  uint16_t       Vdelta;
 
-extern          uint16_t      VbaseBuffer[128];
+extern          uint16_t      VbaseBuffer[512];
 extern volatile uint16_t      VbaseCnt;
 extern volatile uint8_t       VbaseUpdataflag; 
 extern volatile uint8_t       SettingVbaseValeFlag;
@@ -78,7 +78,7 @@ MOTORMACHINE gMotorMachine;
 
 
 //volatile uint16_t ADCSampleBuffer[512];
-volatile uint32_t ADCBuffer[256];
+volatile uint16_t ADCBuffer[1024];
 
 volatile uint8_t  gLogTimerFlag;
 volatile uint32_t gLogTimerCnt;
@@ -118,7 +118,6 @@ static void MX_NVIC_Init(void);
 void bsp_GpioStructInit(void);
 void bsp_SendCarEnterFlag(void);
 void bsp_SendCarEnterTimeroutFlag(void);
-void bsp_ADCCheck(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -172,7 +171,7 @@ int main(void)
   DigitalfloodInit();
   
   BSP_DriverBoardProtocolInit();
-  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 1024);
   
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim5);
@@ -353,6 +352,7 @@ static void MX_NVIC_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 {
 	UNUSED(htim);
+	uint16_t i;
         
         /* 常开的定时器中断，50us进入一次，对光栅状态进行检测 */
         if(htim3.Instance == htim->Instance)
@@ -384,7 +384,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 						if(gHorCloseFlag > 2)
 						{
 							gHorCloseFlag = 0;
-							SettingVbaseValeFlag = 0;
+							//SettingVbaseValeFlag = 0;
 						}
 					}
 				}
@@ -522,8 +522,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
         /* 此定时器中断只有关闸的时候才会起作用，开启中断后每10ms进入一次 */
 	if(htim6.Instance == htim->Instance)
 	{
-                bsp_ADCCheck();
-                if(0 == SettingVbaseValeFlag)
+                for(i = 0; i < 1024;)
+                {
+                    Vadcdata += ADCBuffer[i];
+                    i ++;
+		 }
+		 Vnormal = (uint16_t)(Vadcdata >> 10);
+		 Vadcdata = 0;
+                
+                 if(0 == SettingVbaseValeFlag)
                  {
                     if(Vnormal > Vbase)
                     {
@@ -551,9 +558,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		 {
 			
 			
-			if(VbaseCnt > 128) //如果采样超过512个点则丢弃
+			if(VbaseCnt > 511) //如果采样超过512个点则丢弃
 			{
-				VbaseCnt = 0;
+				VbaseCnt = 511;
 			}
                         
                         VbaseBuffer[VbaseCnt++] = Vnormal;
@@ -561,9 +568,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		 else
 		 {
 			VbaseCnt = 0;
-		 }
-                
-                Vnormal = 0;
+		 }	 
 	}	
 }
 
@@ -617,64 +622,6 @@ void bsp_GpioStructInit(void)
 	gBarFirstArriveClosedPosionFlag = 0;
 
 	
-	
-}
-void  bsp_ADCCheck()
-{
-   uint16_t i;
-   uint8_t VbaseValueBuffer[4];
-   Vadcdata = 0;
-  
-   for(i = 0; i < 256;)
-   {
-           Vadcdata += ADCBuffer[i];
-           i ++;
-	}
-	Vnormal = (uint16_t)(Vadcdata >> 8);
-   
-#ifdef __Debug__
-   
-	VbaseValueBuffer[0] = 0xBB;
-	VbaseValueBuffer[1] = Vnormal >> 8;
-	VbaseValueBuffer[2] = Vnormal;
-        VbaseValueBuffer[3] = 0xBB;
-	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
-#endif	
-
-}
-/**
-  * @brief  Conversion complete callback in non blocking mode 
-  * @param  hadc: ADC handle
-  * @retval None
-  */
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
-{
-  /* Prevent unused argument(s) compilation warning */
-  UNUSED(hadc);
-  /* NOTE : This function should not be modified. When the callback is needed,
-            function HAL_ADC_ConvCpltCallback must be implemented in the user file.
-   */
-  /*
-   uint16_t i;
-   uint8_t VbaseValueBuffer[4];
-   Vadcdata = 0;
-  
-   for(i = 0; i < 256;)
-   {
-           Vadcdata += ADCBuffer[i];
-           i ++;
-	}
-	Vnormal = (uint16_t)(Vadcdata >> 8);
-   
-#ifdef __Debug__
-   
-	VbaseValueBuffer[0] = 0xBB;
-	VbaseValueBuffer[1] = Vnormal >> 8;
-	VbaseValueBuffer[2] = Vnormal;
-        VbaseValueBuffer[3] = 0xBB;
-	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
-#endif	
-*/
 	
 }
 

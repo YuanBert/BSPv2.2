@@ -16,7 +16,7 @@ volatile uint16_t		TiggerTimeCnt;
 
 
 
-uint16_t	          VbaseBuffer[128];
+uint16_t	          VbaseBuffer[512];
 volatile uint16_t	  VbaseCnt;
 volatile uint8_t         VbaseUpdataflag;  //在开始落闸的时候写1，如果中途遇阻，设置为0，如果中途未遇阻，则不写零，在更新数据完成后置零
 volatile uint8_t         SettingVbaseValeFlag;
@@ -28,13 +28,13 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 	uint16_t i;
 	uint32_t sum;
 	uint8_t VbaseValueBuffer[4];
-        sum = 0;
-	for(i = 0; i < 128;i++)
+
+	for(i = 0; i < VbaseCnt;i++)
 	{
 		sum += VbaseBuffer[i];
 	}
 		
-	Vbase = (uint16_t)(sum >> 7);  //更新Vbase值,采用的是均值滤波的方法，可以进行优化
+	Vbase = (uint16_t)(sum / VbaseCnt);  //更新Vbase值,采用的是均值滤波的方法，可以进行优化
 		/* 添加日志信息,将基准电流上报 */
 	
 #ifdef __Debug__
@@ -42,8 +42,7 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 	VbaseValueBuffer[1] = Vbase >> 8;
 	VbaseValueBuffer[2] = Vbase;
         VbaseValueBuffer[3] = 0xAA;
-	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);
-        BSP_SendDataToDriverBoard((uint8_t*)VbaseBuffer,256,0xFFFF);
+	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
 #endif	
 
 	VbaseCnt = 0;
@@ -57,7 +56,7 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 BSP_StatusTypeDef DigitalfloodInit(void)
 {
   BSP_StatusTypeDef  state = BSP_OK;
-  Vthreshold = 0x40;  	//deflaut tirgger I is 3A
+  Vthreshold = 0x80;  	//deflaut tirgger I is 3A
   TiggerTimeSum = 100; //默认反映精度为1s
   SettingVbaseValeFlag = 1;
 

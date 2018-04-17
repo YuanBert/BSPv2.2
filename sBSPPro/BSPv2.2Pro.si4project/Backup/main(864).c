@@ -68,7 +68,7 @@ extern  uint16_t       Vthreshold;
 extern  uint16_t       Vbase;          //基础电流值
 extern  uint16_t       Vdelta;
 
-extern          uint16_t      VbaseBuffer[128];
+extern          uint16_t      VbaseBuffer[512];
 extern volatile uint16_t      VbaseCnt;
 extern volatile uint8_t       VbaseUpdataflag; 
 extern volatile uint8_t       SettingVbaseValeFlag;
@@ -384,7 +384,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 						if(gHorCloseFlag > 2)
 						{
 							gHorCloseFlag = 0;
-							SettingVbaseValeFlag = 0;
+							//SettingVbaseValeFlag = 0;
 						}
 					}
 				}
@@ -551,9 +551,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		 {
 			
 			
-			if(VbaseCnt > 128) //如果采样超过512个点则丢弃
+			if(VbaseCnt > 511) //如果采样超过512个点则丢弃
 			{
-				VbaseCnt = 0;
+				VbaseCnt = 511;
 			}
                         
                         VbaseBuffer[VbaseCnt++] = Vnormal;
@@ -561,9 +561,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		 else
 		 {
 			VbaseCnt = 0;
-		 }
-                
-                Vnormal = 0;
+		 }	 
 	}	
 }
 
@@ -654,7 +652,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
   /* NOTE : This function should not be modified. When the callback is needed,
             function HAL_ADC_ConvCpltCallback must be implemented in the user file.
    */
-  /*
    uint16_t i;
    uint8_t VbaseValueBuffer[4];
    Vadcdata = 0;
@@ -674,7 +671,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
         VbaseValueBuffer[3] = 0xBB;
 	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
 #endif	
-*/
 	
 }
 
