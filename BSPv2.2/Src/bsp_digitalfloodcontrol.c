@@ -11,14 +11,14 @@ uint16_t     Vdelta;
 uint16_t     Vnormal;
 uint16_t     Vnormalt;
 
-uint16_t		TiggerTimeSum;
-volatile uint16_t		TiggerTimeCnt;
+			uint16_t		TiggerTimeSum;
+volatile	uint16_t		TiggerTimeCnt;
 
 
 
 uint16_t	          VbaseBuffer[128];
 volatile uint16_t	  VbaseCnt;
-volatile uint8_t         VbaseUpdataflag;  //在开始落闸的时候写1，如果中途遇阻，设置为0，如果中途未遇阻，则不写零，在更新数据完成后置零
+
 volatile uint8_t         SettingVbaseValeFlag;
 
 
@@ -28,8 +28,8 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 	uint16_t i;
 	uint32_t sum;
 	uint8_t VbaseValueBuffer[4];
-        sum = 0;
-	for(i = 0; i < 128;i++)
+
+	for(i = 0,sum = 0; i < 128;i++)
 	{
 		sum += VbaseBuffer[i];
 	}
@@ -41,9 +41,9 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 	VbaseValueBuffer[0] = 0xAA;
 	VbaseValueBuffer[1] = Vbase >> 8;
 	VbaseValueBuffer[2] = Vbase;
-        VbaseValueBuffer[3] = 0xAA;
+    VbaseValueBuffer[3] = 0xAA;
 	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);
-        BSP_SendDataToDriverBoard((uint8_t*)VbaseBuffer,256,0xFFFF);
+    BSP_SendDataToDriverBoard((uint8_t*)VbaseBuffer,256,0xFFFF);
 #endif	
 
 	VbaseCnt = 0;
@@ -91,10 +91,10 @@ BSP_StatusTypeDef CheckDigitalfloodontrol(void)
   
   if(TiggerTimeCnt > TiggerTimeSum)
   {
+	HAL_TIM_Base_Stop_IT(&htim6);
 	Vnormal = 0;
 	Vnormalt = 0;
 	TiggerTimeCnt = 0;
-	HAL_TIM_Base_Stop_IT(&htim6);
 	
   	//电机停止转动，写遇阻标记位
 	

@@ -1,6 +1,6 @@
 Configuration	BSPv2.2
 STM32CubeMX 	4.25.0
-Date	04/17/2018
+Date	04/18/2018
 MCU	STM32F103RCTx
 
 
@@ -68,7 +68,7 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : BSPv2.2
-Project Folder : E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2
+Project Folder : E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2
 Toolchain / IDE : EWARM
 Firmware Package Name and Version : STM32Cube FW_F1 V1.6.1
 

@@ -187,60 +187,17 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+    /*bsp_ADCCheck();
+    HAL_Delay(10);
+    */
+      
+  
   BSP_HandingUartDataFromDriverBoard();
   BSP_HandingDriverBoardRequest();
   BSP_SendAckData();
 
-  	if(gLogTimerFlag)
-  	{
-		gLogTimerFlag = 0;
-		//BSP_SendByteToDriverBoard('A',0xFFFF);
-	}
-        
-  	if(1 == gCarEnteredFlag)
-  	{
-          gOpenBarTimerFlag = 0;
-		  gOpenBarTimerCnt = 0;
-		  gOpenBarTimeoutFlag = 0;
-		  gOpenFlag = 4;//
-		  /* 发送车辆入场指令 */
-		  bsp_SendCarEnterFlag();
-		  gCarEnteredFlag = 0;
-  	}
-	
-	if(1 == gBarFirstArriveOpenedPosinFlag)
-  	{
-		if(2 == gOpenFlag)
-		{
-			gOpenFlag = 3;	//表示处在垂直位置
-			VbaseCnt = 0;   //归零计数
-			TiggerTimeCnt = 0;//
-		}
-		gBarFirstArriveOpenedPosinFlag = 0;
-#ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag\r\n",35, 0xFFFF);
-#endif
-	}
-
-	if(1 == gBarFirstArriveClosedPosionFlag)
-	{
-		if(1 == gOpenBarTimeoutFlag)
-		{
-		  gOpenBarTimeoutFlag = 0;
-		  /* 发送车辆入场超时指令 */
-		  bsp_SendCarEnterTimeroutFlag();
-		}
-		UpdateVbaseValue();
-		gBarFirstArriveClosedPosionFlag = 0;
-#ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
-#endif		
-	}
-        
-        
-
-	BSP_MotorCheck();
-	BSP_MotorAction();
+  BSP_MotorCheck();
+  BSP_MotorAction();
 	
   }
   /* USER CODE END 3 */
@@ -311,6 +268,9 @@ void SystemClock_Config(void)
   */
 static void MX_NVIC_Init(void)
 {
+  /* ADC1_2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(ADC1_2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
   /* USART1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART1_IRQn);
@@ -335,9 +295,6 @@ static void MX_NVIC_Init(void)
   /* DMA1_Channel6_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
-  /* ADC1_2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(ADC1_2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(ADC1_2_IRQn);
   /* I2C2_EV_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(I2C2_EV_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(I2C2_EV_IRQn);
@@ -353,217 +310,188 @@ static void MX_NVIC_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 {
 	UNUSED(htim);
-        
         /* 常开的定时器中断，50us进入一次，对光栅状态进行检测 */
-        if(htim3.Instance == htim->Instance)
-        {
-          gHorGpio.CurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
-		  gVerGpio.CurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
-
-		  if(0 == gHorGpio.CurrentReadVal && 0 == gHorGpio.LastReadVal)
+	if(htim3.Instance == htim->Instance)
+	{
+	  gHorGpio.CurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
+	  gVerGpio.CurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
+	  if(0 == gHorGpio.CurrentReadVal && 0 == gHorGpio.LastReadVal)
+	  {
+		gHorGpio.FilterCnt++;
+		if(gHorGpio.FilterCnt > gHorGpio.FilterCntSum)
+		{
+		  gMotorMachine.HorizontalRasterState = 1;
+		  gHorGpio.GpioState = 1;
+		  gHorGpio.FilterCnt = 0;	
+		  if(DOWNDIR == gMotorMachine.RunDir)
 		  {
-			 gHorGpio.FilterCnt++;
-			 if(gHorGpio.FilterCnt > gHorGpio.FilterCntSum)
-			 {
-				gMotorMachine.HorizontalRasterState = 1;
-				gHorGpio.GpioState = 1;
-				gHorGpio.FilterCnt = 0;
-				
-				if(DOWNDIR == gMotorMachine.RunDir)
-				{
-					HAL_TIM_Base_Stop_IT(&htim4);
-					HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
-					BSP_MotorStop(); //停止电机转动
-                    gOpenFlag = 0;
-					gMotorMachine.RunDir = UPDIR;//修改方向标记位
-					gMotorMachine.RunningState = 0;//修改运行状态
-					gBarFirstArriveClosedPosionFlag = 1;//
-					if(SettingVbaseValeFlag)
-					{
-						gHorCloseFlag++;
-						if(gHorCloseFlag > 2)
-						{
-							gHorCloseFlag = 0;
-							SettingVbaseValeFlag = 0;
-						}
-					}
-				}
-				
-				
-			 }
-		  	}
-			else
+			HAL_TIM_Base_Stop_IT(&htim4);
+			HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
+			BSP_MotorStop(); //停止电机转动
+			gOpenFlag = 0;
+			gMotorMachine.RunDir = UPDIR;//修改方向标记位
+			gMotorMachine.RunningState = 0;//修改运行状态
+			gBarFirstArriveClosedPosionFlag = 1;//
+			if(SettingVbaseValeFlag)
 			{
-				gMotorMachine.HorizontalRasterState = 0;
-				gHorGpio.GpioState = 0;
-				gHorGpio.FilterCnt = 0;
+			  gHorCloseFlag++;
+			  if(gHorCloseFlag > 2)
+			  {
+				gHorCloseFlag = 0;
+				SettingVbaseValeFlag = 0;
+			  }
 			}
-			 gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
-
-			 if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
-			 {
-				gVerGpio.FilterCnt++;
-				if(gVerGpio.FilterCnt > gVerGpio.FilterCntSum)
-				{
-					gVerGpio.GpioState = 1;
-					gVerGpio.FilterCnt = 0;
-					gMotorMachine.VerticalRasterState = 1;
-					if(UPDIR == gMotorMachine.RunDir)
-					{
-						BSP_MotorStop();
-						gMotorMachine.RunDir = DOWNDIR;//修改方向标记位
-						gMotorMachine.RunningState = 0;//改变运行状态标记位
-						gOpenBarTimerFlag = 1;
-						gBarFirstArriveOpenedPosinFlag = 1;
-					}
-					
-					if(1 == gMotorMachine.StartFlag)	//如果初始位置在垂直位置，此可以进行自动复位
-					{
-						gMotorMachine.StartFlag = 0;
-						gOpenBarTimerFlag = 1;
-						
-						gOpenFlag = 3;	//表示处在垂直位置
-						VbaseCnt = 0;   //归零计数
-						TiggerTimeCnt = 0;//
-					}
-					
-				}
-			 }
-			 else
-			 {
-				gMotorMachine.VerticalRasterState = 0;
-				gVerGpio.GpioState = 0;
-				gVerGpio.FilterCnt = 0;
-			 }
-
-			 gVerGpio.LastReadVal = gVerGpio.CurrentReadVal;
-		 
-		  
-          return;
-        }
+		  }		
+		}
+	  }
+	  else
+	  {
+		gMotorMachine.HorizontalRasterState = 0;
+		gHorGpio.GpioState = 0;
+		gHorGpio.FilterCnt = 0;
+	  }
+	  gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
+	  if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
+	  {
+		gVerGpio.FilterCnt++;
+		if(gVerGpio.FilterCnt > gVerGpio.FilterCntSum)
+		{
+		  gVerGpio.GpioState = 1;
+		  gVerGpio.FilterCnt = 0;
+		  gMotorMachine.VerticalRasterState = 1;
+		  if(UPDIR == gMotorMachine.RunDir)
+		  {
+			BSP_MotorStop();
+			gMotorMachine.RunDir = DOWNDIR;//修改方向标记位
+			gMotorMachine.RunningState = 0;//改变运行状态标记位
+			gOpenBarTimerFlag = 1;
+			gBarFirstArriveOpenedPosinFlag = 1;
+		  }		
+		  if(1 == gMotorMachine.StartFlag)	//如果初始位置在垂直位置，此可以进行自动复位
+		  {
+			gMotorMachine.StartFlag = 0;
+			gOpenBarTimerFlag = 1;
+			gOpenFlag = 3;	//表示处在垂直位置
+			VbaseCnt = 0;   //归零计数
+			TiggerTimeCnt = 0;//
+		  }		
+		}
+	  }
+	  else
+	  {
+		gMotorMachine.VerticalRasterState = 0;
+		gVerGpio.GpioState = 0;
+		gVerGpio.FilterCnt = 0;
+	  }
+	  gVerGpio.LastReadVal = gVerGpio.CurrentReadVal;
+	  return;
+	}
         
-        /* 非常开的定时器中断，该中断在接收到开闸指令后才打开，用来检测地感和
-        压力波传感器信号，在检测到杆到达水平位置之后就直接关闭该中断，该中断每1ms
-        进入一次，开闸的调速也将在改中断中完成*/
-        if(htim4.Instance == htim->Instance)
-        {
-			/* 调速 */
-		   gOpenSpeedTimerCnt ++;
-		   if(gOpenSpeedTimerCnt > 9)
-		   {
-				gOpenSpeedTimerFlag = 1;
-				gOpenSpeedTimerCnt = 0;
-		   }
-		   
-			/* 地感检测，起到防砸和判断车辆是否进入的作用 */
-		  gGentleSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
-          if(0 == gGentleSensorGpio.CurrentReadVal && 0 == gGentleSensorGpio.LastReadVal)
-          {
-			if(0 == gGentleSensorGpio.GpioState)
-			{
-				gGentleSensorGpio.FilterCnt++;
-				if(gGentleSensorGpio.FilterCnt > gGentleSensorGpio.FilterCntSum)
-				{
-					gGentleSensorGpio.GpioState = 1;
-					gGentleSensorGpio.FilterCnt = 0;
-					/* 添加日志文档       */
-					
-				}
-			}
-          }
-		  else
+   	/* 非常开的定时器中断，该中断在接收到开闸指令后才打开，用来检测地感和
+	压力波传感器信号，在检测到杆到达水平位置之后就直接关闭该中断，该中断每1ms
+	进入一次，开闸的调速也将在改中断中完成*/
+	if(htim4.Instance == htim->Instance)
+	{
+	  /* 调速 */
+	  gOpenSpeedTimerCnt ++;
+	  if(gOpenSpeedTimerCnt > 9)
+	  {
+		gOpenSpeedTimerFlag = 1;
+		gOpenSpeedTimerCnt = 0;
+	  }   
+		/* 地感检测，起到防砸和判断车辆是否进入的作用 */
+	  gGentleSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
+	  if(0 == gGentleSensorGpio.CurrentReadVal && 0 == gGentleSensorGpio.LastReadVal)
+	  {
+		if(0 == gGentleSensorGpio.GpioState)
+		{
+		  gGentleSensorGpio.FilterCnt++;
+		  if(gGentleSensorGpio.FilterCnt > gGentleSensorGpio.FilterCntSum)
 		  {
-			if(gGentleSensorGpio.GpioState)
-			{
-				gCarEnteredFlag = 1;
-				
-				/* 添加日志文档 */
-			}
-			gGentleSensorGpio.GpioState = 0;
+			gGentleSensorGpio.GpioState = 1;
 			gGentleSensorGpio.FilterCnt = 0;
-			gGentleSensorGpio.LastReadVal = gGentleSensorGpio.CurrentReadVal;
-
-			/* 空气波检测 */
-
-			
+			/* 添加日志文档       */		
 		  }
-          return;
-        }
+		}
+	  }
+	  else
+	  {
+		if(gGentleSensorGpio.GpioState)
+		{
+		  gCarEnteredFlag = 1;	
+		  /* 添加日志文档 */
+		}
+		gGentleSensorGpio.GpioState = 0;
+		gGentleSensorGpio.FilterCnt = 0;
+		gGentleSensorGpio.LastReadVal = gGentleSensorGpio.CurrentReadVal;
+		/* 空气波检测 */			
+	  }
+	  return;
+	}
         
         
-        /* 常开中断，每200ms进入一次，用以对log日志进行上报，系统自检等功能，同时
-        也来兼顾来车控灯的作用 */
-        
-        if(htim5.Instance == htim->Instance)
-        {
-			gLogTimerCnt++;
-			if(gLogTimerCnt > 10)
-			{
-				gLogTimerFlag = 1;
-				gLogTimerCnt = 0;
-			}
-			
-			if(1 == gOpenBarTimerFlag)
-			{
-				gOpenBarTimerCnt++;
-				if(gOpenBarTimerCnt > 50)	//等待时间为10秒钟，超过10秒钟认为是超时
-				{
-					gOpenBarTimeoutFlag = 1;
-					gOpenBarTimerCnt = 0;
-					gOpenBarTimerFlag = 0;
-					gOpenFlag = 4;
-				}
-			}
-			return;
-        }
+    /* 常开中断，每200ms进入一次，用以对log日志进行上报，系统自检等功能，同时
+    也来兼顾来车控灯的作用 */
+	if(htim5.Instance == htim->Instance)
+	{
+	  gLogTimerCnt++;
+	  if(gLogTimerCnt > 10)
+	  {
+		gLogTimerFlag = 1;
+		gLogTimerCnt = 0;
+	  }	
+	  if(1 == gOpenBarTimerFlag)
+	  {
+		gOpenBarTimerCnt++;
+		if(gOpenBarTimerCnt > 50)	//等待时间为10秒钟，超过10秒钟认为是超时
+		{
+		  gOpenBarTimeoutFlag = 1;
+		  gOpenBarTimerCnt = 0;
+		  gOpenBarTimerFlag = 0;
+		  gOpenFlag = 4;
+		}
+	  }
+	  return;
+	}
         
         
         
-        /* 此定时器中断只有关闸的时候才会起作用，开启中断后每10ms进入一次 */
+    /* 此定时器中断只有关闸的时候才会起作用，开启中断后每10ms进入一次 */
 	if(htim6.Instance == htim->Instance)
 	{
-                bsp_ADCCheck();
-                if(0 == SettingVbaseValeFlag)
-                 {
-                    if(Vnormal > Vbase)
-                    {
-			
-                         Vdelta = Vnormal - Vbase;
-			
-                    }
-                    else
-                    {
-                          Vdelta = Vbase - Vnormal;                           
-                    }
-
-                    if(Vdelta > Vthreshold)
-                    {
-                            TiggerTimeCnt++;
-                    }
-                    else
-                    {
-                          TiggerTimeCnt = 0;
-                    }
-                    
-                 }
-
-		 if(0 == TiggerTimeCnt)
-		 {
-			
-			
-			if(VbaseCnt > 128) //如果采样超过512个点则丢弃
-			{
-				VbaseCnt = 0;
-			}
-                        
-                        VbaseBuffer[VbaseCnt++] = Vnormal;
-		 }
-		 else
-		 {
-			VbaseCnt = 0;
-		 }
-                
-                Vnormal = 0;
+	  bsp_ADCCheck();
+	  if(0 == SettingVbaseValeFlag)
+	  {
+		if(Vnormal > Vbase)
+		{
+		  Vdelta = Vnormal - Vbase;
+		}
+		else
+		{
+		  Vdelta = Vbase - Vnormal;                           
+		}
+		if(Vdelta > Vthreshold)
+		{
+		  TiggerTimeCnt++;
+		}
+		else
+		{
+		  TiggerTimeCnt = 0;
+		} 
+	  }
+	  if(0 == TiggerTimeCnt)
+	  {	
+		if(VbaseCnt > 128) //如果采样超过128个点则丢弃
+		{
+		  VbaseCnt = 0;
+		}
+		VbaseBuffer[VbaseCnt++] = Vnormal;
+	  }
+	  else
+	  {
+		VbaseCnt = 0;
+	  }          
+	  Vnormal = 0;
 	}	
 }
 
@@ -578,7 +506,6 @@ void bsp_SendCarEnterFlag(void)
 	pData[6] = 0x5D;
 	pData[2] = 0x00;
 	pData[5] = 0xE3;
-
 	BSP_SendDataToDriverBoard(pData,7,0xFFFF);
 	return ;
 }
@@ -615,9 +542,6 @@ void bsp_GpioStructInit(void)
 
 	gBarFirstArriveOpenedPosinFlag = 0;
 	gBarFirstArriveClosedPosionFlag = 0;
-
-	
-	
 }
 void  bsp_ADCCheck()
 {
@@ -628,7 +552,7 @@ void  bsp_ADCCheck()
    for(i = 0; i < 256;)
    {
            Vadcdata += ADCBuffer[i];
-           i ++;
+           i++;
 	}
 	Vnormal = (uint16_t)(Vadcdata >> 8);
    
@@ -637,7 +561,7 @@ void  bsp_ADCCheck()
 	VbaseValueBuffer[0] = 0xBB;
 	VbaseValueBuffer[1] = Vnormal >> 8;
 	VbaseValueBuffer[2] = Vnormal;
-        VbaseValueBuffer[3] = 0xBB;
+	VbaseValueBuffer[3] = 0xBB;
 	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
 #endif	
 
@@ -654,28 +578,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
   /* NOTE : This function should not be modified. When the callback is needed,
             function HAL_ADC_ConvCpltCallback must be implemented in the user file.
    */
-  /*
-   uint16_t i;
-   uint8_t VbaseValueBuffer[4];
-   Vadcdata = 0;
-  
-   for(i = 0; i < 256;)
-   {
-           Vadcdata += ADCBuffer[i];
-           i ++;
-	}
-	Vnormal = (uint16_t)(Vadcdata >> 8);
-   
-#ifdef __Debug__
-   
-	VbaseValueBuffer[0] = 0xBB;
-	VbaseValueBuffer[1] = Vnormal >> 8;
-	VbaseValueBuffer[2] = Vnormal;
-        VbaseValueBuffer[3] = 0xBB;
-	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
-#endif	
-*/
-	
+	bsp_ADCCheck();
 }
 
 
