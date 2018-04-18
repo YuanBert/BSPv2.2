@@ -73,10 +73,10 @@ NeedToAckStruct sNeedToAckStruct;
 
 
 static uint8_t DriverRevDataBuf[DATABUFLEN];
-static uint8_t DriverSenddataBuf[DATABUFLEN];    
+//static uint8_t DriverSenddataBuf[DATABUFLEN];    
 
-static uint8_t LeftDoorRevDataBuf[DATABUFLEN];
-static uint8_t LeftDoorSendDataBuf[DATABUFLEN];
+//static uint8_t LeftDoorRevDataBuf[DATABUFLEN];
+//static uint8_t LeftDoorSendDataBuf[DATABUFLEN];
 
 
 tTable Table = {{0},0};
@@ -438,15 +438,15 @@ BSP_StatusTypeDef BSP_HandingDriverBoardRequest(void)
 	
 	  if (1 == SendOpenFlag.Flag)
 	  {
-                if(0 == gOpenFlag)  
-                {
-                    gOpenFlag= 1;
+         if(0 == gOpenFlag)  
+         {
+             gOpenFlag= 1;
 			  
-                    sNeedToAckStruct.AckCodeL[Table.tab[SendOpenFlag.position]] = 0x00;
+             sNeedToAckStruct.AckCodeL[Table.tab[SendOpenFlag.position]] = 0x00;
 		 }
 		 else
 		 {
-                    sNeedToAckStruct.AckCodeL[SendOpenFlag.position] = 0x01;
+             sNeedToAckStruct.AckCodeL[SendOpenFlag.position] = 0x01;
 		 }
 		  
 		Table.tab[SendOpenFlag.position] = 0x02;

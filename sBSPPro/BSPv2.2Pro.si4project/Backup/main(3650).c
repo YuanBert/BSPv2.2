@@ -48,7 +48,6 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "stdlib.h"
 #include "stdio.h"
 #include "bsp_common.h"
 #include "bsp_DataTransmissionLayer.h"
@@ -64,14 +63,13 @@
 /* Private variables ---------------------------------------------------------*/
 extern volatile uint16_t       TiggerTimeCnt;
 extern  uint16_t       TiggerTimeSum;
-
+extern  uint16_t       Vnormal;
 extern  uint16_t       Vnormalt;
 extern  uint16_t       Vthreshold;
 extern  uint16_t       Vbase;          //基础电流值
 extern  uint16_t       Vdelta;
 
-extern volatile uint16_t      VbaseBuffer[128];
-extern uint16_t      Vnormal;
+extern          uint16_t      VbaseBuffer[128];
 extern volatile uint16_t      VbaseCnt;
 extern volatile uint8_t       VbaseUpdataflag; 
 extern volatile uint8_t       SettingVbaseValeFlag;
@@ -81,7 +79,7 @@ MOTORMACHINE gMotorMachine;
 
 
 //volatile uint16_t ADCSampleBuffer[512];
-uint32_t ADCBuffer[32];
+volatile uint32_t ADCBuffer[256];
 
 volatile uint8_t  gLogTimerFlag;
 volatile uint32_t gLogTimerCnt;
@@ -175,8 +173,7 @@ int main(void)
   DigitalfloodInit();
   
   BSP_DriverBoardProtocolInit();
-  //HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
-  //HAL_ADC_Stop_DMA(&hadc1);
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
   
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim5);
@@ -204,14 +201,9 @@ int main(void)
   if(1 == gLogTimerFlag)
   {
 	gLogTimerFlag = 0;
-#ifdef __Debug__
-    BSP_SendDataToDriverBoard((uint8_t*)"\r\n Timelog \r\n",13,0xFFFF);
-#endif
 	
   }
-  
-
-  /* 检测车辆是否入场或者出场信息 */
+	/* 检测车辆是否入场或者出场信息 */
   if(1 == gCarEnteredFlag)
   {
 	if(3 == gOpenFlag)
@@ -228,22 +220,22 @@ int main(void)
 
   if(1 == gBarFirstArriveOpenedPosinFlag)
   {
-    gBarFirstArriveOpenedPosinFlag = 0;
 	if(2 == gOpenFlag)
 	{
 		gOpenFlag = 3;
 		VbaseCnt = 0;
 		TiggerTimeCnt = 0;
 	}
+	gBarFirstArriveOpenedPosinFlag = 0;
 #ifdef __Debug__
-	//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag \r\n",35,0xFFFF);
+	BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag \r\n",35,0xFFFF);
 #endif
   }
 
   if(1 == gBarFirstArriveClosedPosionFlag)
   {
 	gBarFirstArriveClosedPosionFlag = 0;
-	if(2 == gOpenBarTimeoutFlag)
+	if(1 == gOpenBarTimeoutFlag)
 	{
 		gOpenBarTimeoutFlag = 0;
 		/* 发送车辆入场或者出场超时信息 */
@@ -252,7 +244,7 @@ int main(void)
 	/* 更新Vbase的数据值 */
 	UpdateVbaseValue();
 #ifdef	__Debug__
-	//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
+	BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
 #endif
   }
 
@@ -388,10 +380,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		  gHorGpio.FilterCnt = 0;	
 		  if(DOWNDIR == gMotorMachine.RunDir)
 		  {
+			HAL_TIM_Base_Stop_IT(&htim4);
 			HAL_TIM_Base_Stop_IT(&htim6);//停止定时器中断
-            HAL_ADC_Stop_DMA(&hadc1);
 			BSP_MotorStop(); //停止电机转动
-            HAL_TIM_Base_Stop_IT(&htim4);
 			gOpenFlag = 0;
 			gMotorMachine.RunDir = UPDIR;//修改方向标记位
 			gMotorMachine.RunningState = 0;//修改运行状态
@@ -414,7 +405,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		gHorGpio.GpioState = 0;
 		gHorGpio.FilterCnt = 0;
 	  }
-      
 	  gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
 	  if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
 	  {
@@ -434,18 +424,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		  }		
 		  if(1 == gMotorMachine.StartFlag)	//如果初始位置在垂直位置，此可以进行自动复位
 		  {
-			BSP_MotorStop();
-            gMotorMachine.StartFlag = 0;
+			gMotorMachine.StartFlag = 0;
 			gOpenBarTimerFlag = 1;
 			gOpenFlag = 3;	//表示处在垂直位置
 			VbaseCnt = 0;   //归零计数
 			TiggerTimeCnt = 0;//
-		  }
-          if(1 == gOpenBarTimeoutFlag)
-          {
-            gOpenFlag = 4;  
-            gOpenBarTimeoutFlag = 2;
-          }
+		  }		
 		}
 	  }
 	  else
@@ -506,7 +490,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	if(htim5.Instance == htim->Instance)
 	{
 	  gLogTimerCnt++;
-	  if(gLogTimerCnt > 50)
+	  if(gLogTimerCnt > 10)
 	  {
 		gLogTimerFlag = 1;
 		gLogTimerCnt = 0;
@@ -514,11 +498,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	  if(1 == gOpenBarTimerFlag)
 	  {
 		gOpenBarTimerCnt++;
-		if(gOpenBarTimerCnt > 60)	//等待时间为6秒钟，超过6秒钟认为是超时
+		if(gOpenBarTimerCnt > 50)	//等待时间为10秒钟，超过10秒钟认为是超时
 		{
 		  gOpenBarTimeoutFlag = 1;
 		  gOpenBarTimerCnt = 0;
 		  gOpenBarTimerFlag = 0;
+		  gOpenFlag = 4;
 		}
 	  }
 	  return;
@@ -530,6 +515,38 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	if(htim6.Instance == htim->Instance)
 	{
 	  bsp_ADCCheck();
+	  if(0 == SettingVbaseValeFlag)
+	  {
+		if(Vnormal > Vbase)
+		{
+		  Vdelta = Vnormal - Vbase;
+		}
+		else
+		{
+		  Vdelta = Vbase - Vnormal;                           
+		}
+		if(Vdelta > Vthreshold)
+		{
+		  TiggerTimeCnt++;
+		}
+		else
+		{
+		  TiggerTimeCnt = 0;
+		} 
+	  }
+	  if(0 == TiggerTimeCnt)
+	  {	
+		if(VbaseCnt > 128) //如果采样超过128个点则丢弃
+		{
+		  VbaseCnt = 0;
+		}
+		VbaseBuffer[VbaseCnt++] = Vnormal;
+	  }
+	  else
+	  {
+		VbaseCnt = 0;
+	  }          
+	  Vnormal = 0;
 	}	
 }
 
@@ -565,18 +582,18 @@ void bsp_GpioStructInit(void)
 	gVerGpio.LastReadVal = 0;
 	gVerGpio.FilterCnt = 0;
 	gVerGpio.GpioState = 0;
-	gVerGpio.FilterCntSum = 19;
+	gVerGpio.FilterCntSum = 15;
 
 
 	gHorGpio.LastReadVal = 0;
 	gHorGpio.FilterCnt = 0;
 	gHorGpio.GpioState = 0;
-	gHorGpio.FilterCntSum = 19;
+	gHorGpio.FilterCntSum = 15;
 
 	gGentleSensorGpio.LastReadVal = 0;
 	gGentleSensorGpio.FilterCnt = 0;
 	gGentleSensorGpio.GpioState = 0;
-	gGentleSensorGpio.FilterCntSum = 25;
+	gGentleSensorGpio.FilterCntSum = 15;
 
 	gBarFirstArriveOpenedPosinFlag = 0;
 	gBarFirstArriveClosedPosionFlag = 0;
@@ -584,60 +601,25 @@ void bsp_GpioStructInit(void)
 void  bsp_ADCCheck()
 {
    uint16_t i;
-   //uint8_t VbaseValueBuffer[4];
-   //char sBuffer[10];
-   if(5!= gOpenFlag)
-   {
-      return;
-   }
+   uint8_t VbaseValueBuffer[4];
+   Vadcdata = 0;
   
-   for(i = 0,Vadcdata = 0; i < 32;i++)
+   for(i = 0; i < 256;)
    {
            Vadcdata += ADCBuffer[i];
+           i++;
 	}
-	Vnormal = (uint16_t)(Vadcdata >> 5);
-    if(0 == SettingVbaseValeFlag)
-    {
-      if(Vnormal > Vbase)
-      {
-        Vdelta = Vnormal - Vbase;
-      }
-      else
-      {
-        Vdelta = Vbase - Vnormal;                           
-      }
-      if(Vdelta > Vthreshold)
-      {
-        TiggerTimeCnt++;
-      }
-      else
-      {
-        TiggerTimeCnt = 0;
-      } 
-    }
-	  
-    if(3 > TiggerTimeCnt)
-    {	
-      if(VbaseCnt > 128) //如果采样超过128个点则丢弃
-      {
-        VbaseCnt = 0;
-      }
-      VbaseBuffer[VbaseCnt++] = Vnormal;
-    }
-    else
-    {
-      VbaseCnt = 0;
-    }              
+	Vnormal = (uint16_t)(Vadcdata >> 8);
+   
 #ifdef __Debug__
-    //sprintf(sBuffer,"\r\nBB%4dBB\r\n",Vnormal);
-//	VbaseValueBuffer[0] = 0xBB;
-//	VbaseValueBuffer[1] = Vnormal >> 8;
-//	VbaseValueBuffer[2] = Vnormal;
-//	VbaseValueBuffer[3] = 0xBB;
-//	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);
-    //BSP_SendDataToDriverBoard((uint8_t*)sBuffer,sizeof(sBuffer),0xFFFF);
+   
+	VbaseValueBuffer[0] = 0xBB;
+	VbaseValueBuffer[1] = Vnormal >> 8;
+	VbaseValueBuffer[2] = Vnormal;
+	VbaseValueBuffer[3] = 0xBB;
+	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);	
 #endif	
-  Vnormal = 0;
+
 }
 /**
   * @brief  Conversion complete callback in non blocking mode 

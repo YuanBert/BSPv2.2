@@ -1,0 +1,3 @@
+---- HardFault_Handler Matches (2 in 2 files) ----
+stm32f1xx_it.c (E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Src) line 80 : void HardFault_Handler(void)
+stm32f1xx_it.h (E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Inc) line 51 : void HardFault_Handler(void);

@@ -47,7 +47,7 @@ extern "C" {
 #define REQUESTFIXEDCOMMANDLEN        7         //Header + CmdType + CmdParam + DataLength + XOR8Bits + End
 #define ACKFIXEDCOMMANDLEN            6         //Header + AckCmdCode + AckCodeH + XOR8Bits  + End
  
-#define DATABUFLEN      512
+#define DATABUFLEN      128
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "stm32f1xx_hal.h"

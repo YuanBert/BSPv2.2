@@ -1,10 +1,7 @@
 #include "bsp_motor.h"
 #include "tim.h"
-#include "adc.h"
 #include "bsp_DataTransmissionLayer.h"
 
-
-extern  uint32_t ADCBuffer[256];
 extern 			 uint16_t		Vnormal;
 extern volatile uint16_t		TiggerTimeSum;
 extern volatile uint16_t		TiggerTimeCnt;
@@ -105,7 +102,7 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 				TiggerTimeCnt = 0;
 				gOpenFlag = 1;
 #ifdef __Debug__
-                //BSP_SendDataToDriverBoard((uint8_t*)"\r\n TiggerTimeCnt > TiggerTimeSum\r\n",35, 0xFFFF);
+                BSP_SendDataToDriverBoard((uint8_t*)"\r\n TiggerTimeCnt > TiggerTimeSum\r\n",35, 0xFFFF);
 #endif
 				/* 写日志信息，报告遇阻信息 */
 
@@ -121,7 +118,7 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 		if(0 == gMotorMachine.RunningState)
 		{
 			gOpenFlag = 4; //执行向下的操作
-			
+			HAL_TIM_Base_Stop_IT(&htim6);
 			if(1 == gMotorMachine.StartFlag)
 			{
 			  gMotorMachine.StartFlag = 0;
@@ -143,44 +140,29 @@ BSP_StatusTypeDef      BSP_MotorAction(void)
 	
 	if(1 == gOpenFlag)
 	{
-		if(1 == gMotorMachine.VerticalRasterState)
-		{
-			gOpenFlag = 3;
-			return state;
-		}
 		gMotorMachine.RunningState = 1;
 		gMotorMachine.RunDir = UPDIR;
 		BSP_MotorRun(gMotorMachine.RunDir);
 		BSP_MotorSpeedSet(100);
 		gOpenFlag = 2;
 		HAL_TIM_Base_Start_IT(&htim4);
-		
+		return state;
                 
 #ifdef __Debug__
-		//BSP_SendDataToDriverBoard((uint8_t*)"\r\n BSP_MotorAction gOpenFlag = 1\r\n",35, 0xFFFF);
+		BSP_SendDataToDriverBoard((uint8_t*)"\r\n BSP_MotorAction gOpenFlag = 1\r\n",35, 0xFFFF);
 #endif
-	return state;
-
                 
 	}
 
 	if(4 == gOpenFlag)
 	{
-		if(1 == gMotorMachine.HorizontalRasterState)
-		{
-			gOpenFlag = 0;
-			return state;
-		}
 		gMotorMachine.RunningState = 1;
 		gMotorMachine.RunDir = DOWNDIR;
 		BSP_MotorRun(gMotorMachine.RunDir);
 		BSP_MotorSpeedSet(86);
-		
-        HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 32);
-        //打开TIM6定时器中断
-		HAL_TIM_Base_Start_IT(&htim6);
-        
 		gOpenFlag = 5; //处于关闸的状态
+		//打开TIM6定时器中断
+		HAL_TIM_Base_Start_IT(&htim6);
 		return state;
 	}
 

@@ -20,7 +20,7 @@
         <LeaveTargetRunning>_ 0</LeaveTargetRunning>
     </JLinkDriver>
     <DebugChecksum>
-        <Checksum>1894462721</Checksum>
+        <Checksum>2959393652</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -29,13 +29,17 @@
     <CodeCoverage>
         <Enabled>_ 0</Enabled>
     </CodeCoverage>
+    <Disassembly>
+        <MixedMode>1</MixedMode>
+        <InstrCount>0</InstrCount>
+    </Disassembly>
+    <CallStack>
+        <ShowArgs>0</ShowArgs>
+    </CallStack>
     <Trace1>
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
     </Trace1>
-    <Disassembly>
-        <InstrCount>0</InstrCount>
-    </Disassembly>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -45,9 +49,6 @@
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
     </TermIOLog>
-    <CallStack>
-        <ShowArgs>0</ShowArgs>
-    </CallStack>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
@@ -66,10 +67,16 @@
     </DisassembleMode>
     <Breakpoints2>
         <Bp0>_ 0 "EMUL_DATA_LOG" "SendOpenFlag" 0 0</Bp0>
-        <Count>1</Count>
+        <Bp1>_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Src\bsp_ProtocolLayer.c}.443.14" 0 0 1 "" 0 "" 0</Bp1>
+        <Count>2</Count>
     </Breakpoints2>
     <Aliases>
-        <Count>0</Count>
+        <A0>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c" ""</A0>
+        <A1>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_i2c.c" ""</A1>
+        <A2>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc_ex.c" ""</A2>
+        <A3>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c" ""</A3>
+        <A4>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_uart.c" ""</A4>
+        <Count>5</Count>
         <SuppressDialog>0</SuppressDialog>
     </Aliases>
 </settings>

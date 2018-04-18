@@ -8,16 +8,15 @@
 uint16_t     Vthreshold;
 uint16_t     Vbase;          //基础电流值
 uint16_t     Vdelta;
-
+uint16_t     Vnormal;
 uint16_t     Vnormalt;
 
-uint16_t	    Vnormal;
 			uint16_t		TiggerTimeSum;
 volatile	uint16_t		TiggerTimeCnt;
 
 
 
-volatile uint16_t	  VbaseBuffer[128];
+uint16_t	          VbaseBuffer[128];
 volatile uint16_t	  VbaseCnt;
 
 volatile uint8_t         SettingVbaseValeFlag;
@@ -39,12 +38,12 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 		/* 添加日志信息,将基准电流上报 */
 	
 #ifdef __Debug__
-	BSP_SendDataToDriverBoard((uint8_t*)VbaseBuffer,256,0xFFFF);
 	VbaseValueBuffer[0] = 0xAA;
 	VbaseValueBuffer[1] = Vbase >> 8;
 	VbaseValueBuffer[2] = Vbase;
     VbaseValueBuffer[3] = 0xAA;
 	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);
+    BSP_SendDataToDriverBoard((uint8_t*)VbaseBuffer,256,0xFFFF);
 #endif	
 
 	VbaseCnt = 0;
@@ -58,8 +57,8 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 BSP_StatusTypeDef DigitalfloodInit(void)
 {
   BSP_StatusTypeDef  state = BSP_OK;
-  Vthreshold = 0x20;  	//deflaut tirgger I is 2A
-  TiggerTimeSum = 0x10; //默认反映精度为0.15s
+  Vthreshold = 0x40;  	//deflaut tirgger I is 3A
+  TiggerTimeSum = 100; //默认反映精度为1s
   SettingVbaseValeFlag = 1;
 
   VbaseCnt = 0;
