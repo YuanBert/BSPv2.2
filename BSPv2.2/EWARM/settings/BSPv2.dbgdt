@@ -128,7 +128,7 @@
                 <expressions>
                     <item>VbaseBuffer</item>
                     <item>ADCBuffer</item>
-                    <item></item>
+                    <item />
                 </expressions>
                 <col-names>
                     <item>Expression</item>

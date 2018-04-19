@@ -12,9 +12,10 @@ uint16_t     Vdelta;
 uint16_t     Vnormalt;
 
 uint16_t	    Vnormal;
-			uint16_t		TiggerTimeSum;
-volatile	uint16_t		TiggerTimeCnt;
+uint16_t		TiggerTimeSum;
 
+volatile    uint16_t	TiggerTimeCnt;
+volatile    uint8_t 	gDigitalFoodFlag;
 
 
 volatile uint16_t	  VbaseBuffer[128];
@@ -58,10 +59,10 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 BSP_StatusTypeDef DigitalfloodInit(void)
 {
   BSP_StatusTypeDef  state = BSP_OK;
-  Vthreshold = 0x20;  	//deflaut tirgger I is 2A
+  Vthreshold = 0x20;  	//deflaut tirgger I is 0x39 -- 0.5A  0xF5 -- 2A
   TiggerTimeSum = 0x10; //默认反映精度为0.15s
   SettingVbaseValeFlag = 1;
-
+  gDigitalFoodFlag = 0;
   VbaseCnt = 0;
   Vbase = 0;
   
@@ -96,7 +97,7 @@ BSP_StatusTypeDef CheckDigitalfloodontrol(void)
 	Vnormal = 0;
 	Vnormalt = 0;
 	TiggerTimeCnt = 0;
-	
+	gDigitalFoodFlag = 1;
   	//电机停止转动，写遇阻标记位
 	
   }

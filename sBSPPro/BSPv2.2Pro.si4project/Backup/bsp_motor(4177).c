@@ -8,12 +8,10 @@ extern  uint32_t ADCBuffer[256];
 extern 			 uint16_t		Vnormal;
 extern volatile uint16_t		TiggerTimeSum;
 extern volatile uint16_t		TiggerTimeCnt;
-extern volatile uint8_t 	    gDigitalFoodFlag;
 
 extern volatile uint8_t gOpenFlag;
 extern MOTORMACHINE gMotorMachine;
 extern GPIOSTRUCT gGentleSensorGpio;
-extern GPIOSTRUCT gAirSensorGpio;
 
 BSP_StatusTypeDef      BSP_MotorInit(void)
 {
@@ -86,12 +84,10 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 	BSP_StatusTypeDef state  = BSP_OK;
 
 	//地感触发是不执行操作
-//	if(1 == gGentleSensorGpio.GpioState)
-//	{
-//		/* 上传车辆停留超时信息，可以根据此进行提示客户 */
-//      
-//      return state;
-//	}
+	//if(1 == gGentleSensorGpio.GpioState)
+	//{
+	//	return state;
+	//}
 
 	
 	
@@ -99,12 +95,8 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 	{
 		if(1 == gMotorMachine.RunningState && DOWNDIR == gMotorMachine.RunDir)
 		{
+			/* 数字防砸 */
 			if(TiggerTimeCnt > TiggerTimeSum)
-			{
-				gDigitalFoodFlag = 1;
-			}
-			/* 数字防砸 *//* 压力波防砸 */
-			if(1 == gDigitalFoodFlag || (gAirSensorGpio.GpioState && 0)) //暂时将压力波传感器禁用
 			{
 				HAL_TIM_Base_Stop_IT(&htim6);
 				gMotorMachine.RunningState = 0;
@@ -112,13 +104,13 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 				Vnormal = 0;
 				TiggerTimeCnt = 0;
 				gOpenFlag = 1;
-				gDigitalFoodFlag = 0;
 #ifdef __Debug__
                 //BSP_SendDataToDriverBoard((uint8_t*)"\r\n TiggerTimeCnt > TiggerTimeSum\r\n",35, 0xFFFF);
 #endif
-				/* 写日志信息，报告遇阻信息 */				
+				/* 写日志信息，报告遇阻信息 */
+
+				return state;
 			}
-			
 			/* 防砸操作 */
 			/*HAL_TIM_Base_Stop_IT(&htim6);//遇阻反弹是关闭ADC采样，也就是关闭数字防砸	*/
 			/* 电机停转操作，运行方向反转操作，运行状态改变，gOpenFlag = 1, */

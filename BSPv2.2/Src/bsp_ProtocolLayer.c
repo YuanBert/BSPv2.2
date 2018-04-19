@@ -441,7 +441,6 @@ BSP_StatusTypeDef BSP_HandingDriverBoardRequest(void)
          if(0 == gOpenFlag)  
          {
              gOpenFlag= 1;
-			  
              sNeedToAckStruct.AckCodeL[Table.tab[SendOpenFlag.position]] = 0x00;
 		 }
 		 else

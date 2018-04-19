@@ -86,12 +86,12 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 	BSP_StatusTypeDef state  = BSP_OK;
 
 	//地感触发是不执行操作
-//	if(1 == gGentleSensorGpio.GpioState)
-//	{
-//		/* 上传车辆停留超时信息，可以根据此进行提示客户 */
-//      
-//      return state;
-//	}
+	if(1 == gGentleSensorGpio.GpioState)
+	{
+		/* 上传车辆停留超时信息，可以根据此进行提示客户 */
+      
+      return state;
+	}
 
 	
 	
@@ -112,7 +112,6 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 				Vnormal = 0;
 				TiggerTimeCnt = 0;
 				gOpenFlag = 1;
-				gDigitalFoodFlag = 0;
 #ifdef __Debug__
                 //BSP_SendDataToDriverBoard((uint8_t*)"\r\n TiggerTimeCnt > TiggerTimeSum\r\n",35, 0xFFFF);
 #endif

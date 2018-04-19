@@ -307,10 +307,7 @@ int main(void)
   
   if(1 == gOpenSpeedTimerFlag && 2 == gOpenFlag)
   {
-      gOpenSpeedTimerFlag = 0;
-
-	  /* 添加调速代码 */
-	  
+      
   }
 	
   }

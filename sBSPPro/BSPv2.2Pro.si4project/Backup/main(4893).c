@@ -56,14 +56,6 @@
 #include "bsp_digitalfloodcontrol.h"
 #include "bsp_motor.h"
 
-#define REDLED_ON       HAL_GPIO_WritePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin,MCUAtmosphereLEDR_ON)
-#define REDLED_OFF		HAL_GPIO_WritePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin,MCUAtmosphereLEDR_OFF)
-#define REDLED_TOGGLE   HAL_GPIO_TogglePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin)
-
-#define GREENLED_ON		HAL_GPIO_WritePin(MCUAtmosphereLEDG_GPIO_Port,MCUAtmosphereLEDG_Pin,MCUAtmosphereLEDG_ON)
-#define GREENLED_OFF	HAL_GPIO_WritePin(MCUAtmosphereLEDG_GPIO_Port,MCUAtmosphereLEDG_Pin,MCUAtmosphereLEDG_OFF)
-#define GREENLED_TOGGLE	HAL_GPIO_TogglePin(MCUAtmosphereLEDG_GPIO_Port,MCUAtmosphereLEDG_Pin)
-
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -83,7 +75,6 @@ extern uint16_t      Vnormal;
 extern volatile uint16_t      VbaseCnt;
 extern volatile uint8_t       VbaseUpdataflag; 
 extern volatile uint8_t       SettingVbaseValeFlag;
-extern volatile uint8_t 	  gDigitalFoodFlag;
 
 MOTORMACHINE gMotorMachine;
 
@@ -110,19 +101,11 @@ volatile uint8_t gObstructFlag;
 
 volatile uint8_t gHorCloseFlag;
 
-
-
-
 volatile uint8_t gCarEnteredFlag;
 GPIOSTRUCT gGentleSensorGpio;
-GPIOSTRUCT gAirSensorGpio;
-
 
 GPIOSTRUCT gHorGpio;
 GPIOSTRUCT gVerGpio;
-
-uint8_t gLedTimerFlag;
-
 
 
 static uint32_t Vadcdata;
@@ -217,33 +200,6 @@ int main(void)
   BSP_HandingDriverBoardRequest();
   BSP_SendAckData();
 
-  /* 氛围灯控制 */
-  if(1 == gLedTimerFlag)
-  {
-	gLedTimerFlag = 0;
-	if(0 == gOpenFlag)
-	{
-		REDLED_ON;
-		GREENLED_OFF;
-	}
-	if(2 == gOpenFlag)
-	{
-		REDLED_OFF;
-		GREENLED_TOGGLE;
-	}
-	if(3 == gOpenFlag)
-	{
-		REDLED_OFF;
-		GREENLED_ON;
-	}
-	if(5 == gOpenFlag)
-	{
-		REDLED_TOGGLE;
-		GREENLED_OFF;
-	}
-  }
-  
-
   /* 发送日志信息 */
   if(1 == gLogTimerFlag)
   {
@@ -304,14 +260,6 @@ int main(void)
 
   BSP_MotorCheck();
   BSP_MotorAction();
-  
-  if(1 == gOpenSpeedTimerFlag && 2 == gOpenFlag)
-  {
-      gOpenSpeedTimerFlag = 0;
-
-	  /* 添加调速代码 */
-	  
-  }
 	
   }
   /* USER CODE END 3 */
@@ -546,31 +494,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		gGentleSensorGpio.GpioState = 0;
 		gGentleSensorGpio.FilterCnt = 0;
 		gGentleSensorGpio.LastReadVal = gGentleSensorGpio.CurrentReadVal;
-		/* 空气波检测 */
-
-		gAirSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(MCU_AIR_GPIO_Port,MCU_AIR_Pin);
-		if(0 == gAirSensorGpio.CurrentReadVal && 0 == gAirSensorGpio.LastReadVal)
-		{
-			if(0 == gAirSensorGpio.GpioState)
-			{
-				gAirSensorGpio.FilterCnt++;
-				if(gAirSensorGpio.FilterCnt > gAirSensorGpio.FilterCntSum)
-				{
-					gAirSensorGpio.GpioState = 1;
-					gAirSensorGpio.FilterCnt = 0;
-					/* 写日志信息 */
-				}
-			}
-		}
-		else
-		{
-			if(1 == gAirSensorGpio.GpioState)
-			{
-				gAirSensorGpio.GpioState = 0;
-				/* 写日志信息 */
-			}
-			gAirSensorGpio.FilterCnt = 0;
-		}
+		/* 空气波检测 */			
 	  }
 	  return;
 	}
@@ -580,7 +504,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
     也来兼顾来车控灯的作用 */
 	if(htim5.Instance == htim->Instance)
 	{
-	  gLedTimerFlag = 1;
 	  gLogTimerCnt++;
 	  if(gLogTimerCnt > 50)
 	  {
@@ -653,12 +576,6 @@ void bsp_GpioStructInit(void)
 	gGentleSensorGpio.FilterCnt = 0;
 	gGentleSensorGpio.GpioState = 0;
 	gGentleSensorGpio.FilterCntSum = 25;
-
-	gAirSensorGpio.CurrentReadVal = 0;
-	gAirSensorGpio.LastReadVal = 0;
-	gAirSensorGpio.GpioState = 0;
-	gAirSensorGpio.FilterCnt = 0;
-	gAirSensorGpio.FilterCntSum = 10;
 
 	gBarFirstArriveOpenedPosinFlag = 0;
 	gBarFirstArriveClosedPosionFlag = 0;
