@@ -85,6 +85,9 @@ extern volatile uint8_t       VbaseUpdataflag;
 extern volatile uint8_t       SettingVbaseValeFlag;
 extern volatile uint8_t 	  gDigitalFoodFlag;
 
+extern uint16_t SpeedDataBufferPtr;
+extern uint8_t  SpeedDataBufferOne[300];
+
 MOTORMACHINE gMotorMachine;
 
 
@@ -278,6 +281,7 @@ int main(void)
 		VbaseCnt = 0;
 		TiggerTimeCnt = 0;
 	}
+	SpeedDataBufferPtr = 0;
 #ifdef __Debug__
 	//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag \r\n",35,0xFFFF);
 #endif
@@ -294,6 +298,7 @@ int main(void)
 	}
 	/* 更新Vbase的数据值 */
 	UpdateVbaseValue();
+	SpeedDataBufferPtr = 0;
 #ifdef	__Debug__
 	//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
 #endif
@@ -310,7 +315,17 @@ int main(void)
       gOpenSpeedTimerFlag = 0;
 
 	  /* 添加调速代码 */
+	  BSP_MotorSpeedSet(SpeedDataBufferOne[SpeedDataBufferPtr]);
 	  
+#ifdef __Debug__
+	  BSP_SendByteToDriverBoard(SpeedDataBufferOne[SpeedDataBufferPtr],0xFFFF);
+#endif
+
+	  SpeedDataBufferPtr++;
+	  if(SpeedDataBufferPtr > 299)
+	  {
+		SpeedDataBufferPtr = 299;
+	  } 
   }
 	
   }
@@ -516,7 +531,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	{
 	  /* 调速 */
 	  gOpenSpeedTimerCnt ++;
-	  if(gOpenSpeedTimerCnt > 9)
+	  if(gOpenSpeedTimerCnt > 4)    //5ms进入一次调速中断
 	  {
 		gOpenSpeedTimerFlag = 1;
 		gOpenSpeedTimerCnt = 0;

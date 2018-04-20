@@ -86,12 +86,12 @@ BSP_StatusTypeDef      BSP_MotorCheck(void)
 	BSP_StatusTypeDef state  = BSP_OK;
 
 	//地感触发是不执行操作
-//	if(1 == gGentleSensorGpio.GpioState)
-//	{
-//		/* 上传车辆停留超时信息，可以根据此进行提示客户 */
-//      
-//      return state;
-//	}
+	if(1 == gGentleSensorGpio.GpioState)
+	{
+		/* 上传车辆停留超时信息，可以根据此进行提示客户 */
+      
+      return state;
+	}
 
 	
 	
@@ -159,7 +159,7 @@ BSP_StatusTypeDef      BSP_MotorAction(void)
 		gMotorMachine.RunningState = 1;
 		gMotorMachine.RunDir = UPDIR;
 		BSP_MotorRun(gMotorMachine.RunDir);
-		BSP_MotorSpeedSet(100);
+		BSP_MotorSpeedSet(50);
 		gOpenFlag = 2;
 		HAL_TIM_Base_Start_IT(&htim4);
 		
