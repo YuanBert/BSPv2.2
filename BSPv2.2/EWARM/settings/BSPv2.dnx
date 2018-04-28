@@ -40,13 +40,6 @@
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
     </Trace1>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Bp0>_ 0 "EMUL_DATA_LOG" "SendOpenFlag" 0 0</Bp0>
-        <Count>1</Count>
-    </Breakpoints2>
     <LogFile>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -56,15 +49,6 @@
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
     </TermIOLog>
-    <Aliases>
-        <A0>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c" ""</A0>
-        <A1>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_i2c.c" ""</A1>
-        <A2>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc_ex.c" ""</A2>
-        <A3>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c" ""</A3>
-        <A4>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_uart.c" ""</A4>
-        <Count>5</Count>
-        <SuppressDialog>0</SuppressDialog>
-    </Aliases>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
@@ -78,8 +62,20 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Bp0>_ 0 "EMUL_DATA_LOG" "SendOpenFlag" 0 0</Bp0>
+        <Count>1</Count>
+    </Breakpoints2>
+    <Aliases>
+        <A0>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c" ""</A0>
+        <A1>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_i2c.c" ""</A1>
+        <A2>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc_ex.c" ""</A2>
+        <A3>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c" ""</A3>
+        <A4>_ "E:\Users\Zgeny\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_uart.c" ""</A4>
+        <Count>5</Count>
+        <SuppressDialog>0</SuppressDialog>
+    </Aliases>
 </settings>
-[JLinkDriver]
-TraceBufferSize=0x00010000
-TraceStallIfFIFOFull=0x00000000
-TracePortSize=0x00000004
