@@ -55,6 +55,8 @@
 #include "bsp_ProtocolLayer.h"
 #include "bsp_digitalfloodcontrol.h"
 #include "bsp_motor.h"
+#include "bsp_log.h"
+#include "bsp_wrieless.h"
 
 #define REDLED_ON       HAL_GPIO_WritePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin,MCUAtmosphereLEDR_ON)
 #define REDLED_OFF		HAL_GPIO_WritePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin,MCUAtmosphereLEDR_OFF)
@@ -124,7 +126,11 @@ GPIOSTRUCT gAirSensorGpio;
 GPIOSTRUCT gHorGpio;
 GPIOSTRUCT gVerGpio;
 
+GPIOSTRUCT gWirelessGpio;
+
+
 uint8_t gLedTimerFlag;
+uint8_t checkWrielessFlag;
 
 
 
@@ -197,7 +203,7 @@ int main(void)
   BSP_DriverBoardProtocolInit();
   //HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
   //HAL_ADC_Stop_DMA(&hadc1);
-  
+  BSP_WirelessInit(3);
   HAL_TIM_Base_Start_IT(&htim3);
   HAL_TIM_Base_Start_IT(&htim5);
   
@@ -251,10 +257,13 @@ int main(void)
   if(1 == gLogTimerFlag)
   {
 	gLogTimerFlag = 0;
+    bsp_LogWriteUpdataFlag();
 #ifdef __Debug__
     BSP_SendDataToDriverBoard((uint8_t*)"\r\n Timelog \r\n",13,0xFFFF);
 #endif
   }
+  
+  bsp_LogCheckUpdata();
   
 
   /* 检测车辆是否入场或者出场信息 */
@@ -290,6 +299,8 @@ int main(void)
   if(1 == gBarFirstArriveClosedPosionFlag)
   {
 	gBarFirstArriveClosedPosionFlag = 0;
+	/* 清空遥控开闸标记位 */
+	gWrielessModeFlag = 0;
 	if(2 == gOpenBarTimeoutFlag)
 	{
 		gOpenBarTimeoutFlag = 0;
@@ -305,27 +316,39 @@ int main(void)
   }
 
 
-  
-
-  BSP_MotorCheck();
-  BSP_MotorAction();
-  
-  if(1 == gOpenSpeedTimerFlag && 2 == gOpenFlag)
+  if(1 == checkWrielessFlag)
   {
-      gOpenSpeedTimerFlag = 0;
+	BSP_WirelessCheck();
+	
+	checkWrielessFlag = 0;
+  }
+  
+  if(1 == gWrielessModeFlag)
+  {
+	BSP_WirelessAction();
+  }
+  else
+  {
+  	BSP_MotorCheck();
+  	BSP_MotorAction();
+  
+  	if(1 == gOpenSpeedTimerFlag && 2 == gOpenFlag)
+  	{
+      	gOpenSpeedTimerFlag = 0;
 
-	  /* 添加调速代码 */
-	  BSP_MotorSpeedSet(SpeedDataBufferOne[SpeedDataBufferPtr]);
+	  	/* 添加调速代码 */
+	  	BSP_MotorSpeedSet(SpeedDataBufferOne[SpeedDataBufferPtr]);
 	  
 #ifdef __Debug__
-	  BSP_SendByteToDriverBoard(SpeedDataBufferOne[SpeedDataBufferPtr],0xFFFF);
+	  	BSP_SendByteToDriverBoard(SpeedDataBufferOne[SpeedDataBufferPtr],0xFFFF);
 #endif
 
-	  SpeedDataBufferPtr++;
-	  if(SpeedDataBufferPtr > 299)
-	  {
-		SpeedDataBufferPtr = 299;
-	  } 
+	  	SpeedDataBufferPtr++;
+	  	if(SpeedDataBufferPtr > 299)
+	 	 {
+			SpeedDataBufferPtr = 299;
+		  } 
+  	}
   }
 	
   }
@@ -547,7 +570,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		  {
 			gGentleSensorGpio.GpioState = 1;
 			gGentleSensorGpio.FilterCnt = 0;
-			/* 添加日志文档       */		
+			/* 添加日志文档       */
+			gLogInfo.uLogInfo.GentleSensorState = 1;
+			bsp_LogWriteUpdataFlag();
+            
 		  }
 		}
 	  }
@@ -557,6 +583,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		{
 		  gCarEnteredFlag = 1;	
 		  /* 添加日志文档 */
+		  gLogInfo.uLogInfo.GentleSensorState = 0;
+		  bsp_LogWriteUpdataFlag();
 		}
 		gGentleSensorGpio.GpioState = 0;
 		gGentleSensorGpio.FilterCnt = 0;
@@ -574,6 +602,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 					gAirSensorGpio.GpioState = 1;
 					gAirSensorGpio.FilterCnt = 0;
 					/* 写日志信息 */
+					gLogInfo.uLogInfo.AirSensorState = 1;
+					bsp_LogWriteUpdataFlag();
 				}
 			}
 		}
@@ -583,6 +613,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 			{
 				gAirSensorGpio.GpioState = 0;
 				/* 写日志信息 */
+				gLogInfo.uLogInfo.AirSensorState = 0;
+				bsp_LogWriteUpdataFlag();
 			}
 			gAirSensorGpio.FilterCnt = 0;
 		}
@@ -591,13 +623,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	}
         
         
-    /* 常开中断，每200ms进入一次，用以对log日志进行上报，系统自检等功能，同时
+    /* 常开中断，每20ms进入一次，用以对log日志进行上报，系统自检等功能，同时
     也来兼顾来车控灯的作用 */
 	if(htim5.Instance == htim->Instance)
 	{
-	  gLedTimerFlag = 1;
+	  checkWrielessFlag = 1;
+	  if(0 == (gLogTimerCnt % 10 ))
+	  {
+	  	gLedTimerFlag = 1;
+	  }
 	  gLogTimerCnt++;
-	  if(gLogTimerCnt > 50)
+	  if(gLogTimerCnt > 999)
 	  {
 		gLogTimerFlag = 1;
 		gLogTimerCnt = 0;
@@ -605,7 +641,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	  if(1 == gOpenBarTimerFlag)
 	  {
 		gOpenBarTimerCnt++;
-		if(gOpenBarTimerCnt > 60)	//等待时间为6秒钟，超过6秒钟认为是超时
+		if(gOpenBarTimerCnt > 600)	//等待时间为6秒钟，超过6秒钟认为是超时
 		{
 		  gOpenBarTimeoutFlag = 1;
 		  gOpenBarTimerCnt = 0;

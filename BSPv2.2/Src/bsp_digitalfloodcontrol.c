@@ -2,6 +2,7 @@
 #include "tim.h"
 #include "bsp_common.h"
 #include "bsp_DataTransmissionLayer.h"
+#include "bsp_log.h"
 
 
 
@@ -38,6 +39,8 @@ BSP_StatusTypeDef UpdateVbaseValue(void)
 		
 	Vbase = (uint16_t)(sum >> 7);  //更新Vbase值,采用的是均值滤波的方法，可以进行优化
 		/* 添加日志信息,将基准电流上报 */
+    gLogInfo.uLogInfo.PeakCurrent = Vbase;
+	bsp_LogWriteUpdataFlag();
 	
 #ifdef __Debug__
 	BSP_SendDataToDriverBoard((uint8_t*)VbaseBuffer,256,0xFFFF);
