@@ -4,8 +4,20 @@
 
 uLogInfo gLogInfo;
 
+
 static uint8_t UpdataFlag;
 
+static uint8_t getXORCode(uint8_t* pData,uint16_t len)
+{
+  uint8_t ret;
+  uint16_t i;
+  ret = pData[0];
+  for(i = 1; i < len; i++)
+  {
+    ret ^= pData[i];
+  }
+  return ret;
+}
 
 void bsp_LogWriteUpdataFlag(void)
 {
@@ -26,9 +38,22 @@ void bsp_LogInit(void)
 
 void bsp_LogCheckUpdata(void)
 {
-	if(1 == UpdataFlag)
+	uint8_t HeadBuffer[31];
+    uint8_t i;
+    if(1 == UpdataFlag)
 	{
-		BSP_SendDataToDriverBoard(gLogInfo.uLogBuffer,24,0xFFFF);
+        HeadBuffer[0] = 0x53;
+        HeadBuffer[1] = 0xD2;
+        HeadBuffer[2] = 0x01;
+        HeadBuffer[3] = 0x00;
+        HeadBuffer[4] = 0x18;
+        HeadBuffer[30] = 0x5D;
+        for(i = 0; i < 24;i++)
+        {
+          HeadBuffer[5+i] = gLogInfo.uLogBuffer[i];
+        }
+        HeadBuffer[29] = getXORCode(HeadBuffer+1,28);
+		BSP_SendDataToDriverBoard(HeadBuffer,31,0xFFFF);
 	}
 
 	UpdataFlag = 0;

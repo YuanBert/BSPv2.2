@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.general.xcl" --backend -f "E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "F:\MyProject\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.general.xcl" --backend -f "F:\MyProject\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.general.xcl" --debug_file=$debugfile --backend -f "E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "F:\MyProject\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.general.xcl" --debug_file=$debugfile --backend -f "F:\MyProject\BSPv2.2\BSPv2.2\EWARM\settings\BSPv2.BSPv2.2.driver.xcl" 
 }

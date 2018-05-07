@@ -63,6 +63,10 @@ BSP_StatusTypeDef  BSP_WirelessCheck(void)
 	if(1 == gMotorMachine.HorizontalRasterState && 0 == gMotorMachine.RunningState)
 	{
 		gWrielessActionFlag = 2;
+        
+        gLogInfo.uLogInfo.GateWay = 2;
+        bsp_LogWriteUpdataFlag();
+        
 		gWrielessModeFlag = 1;
 		wrielessGpioState = 0;
 		return state;
@@ -72,6 +76,10 @@ BSP_StatusTypeDef  BSP_WirelessCheck(void)
 	if(1 == gMotorMachine.VerticalRasterState && 0 == gMotorMachine.RunningState)
 	{
 		gWrielessActionFlag = 3;
+        /* 添加日志*/
+        gLogInfo.uLogInfo.GateWay = 3;
+        bsp_LogWriteUpdataFlag();
+        
 		gWrielessModeFlag = 1;
 		wrielessGpioState = 0;
 		return state;
@@ -81,6 +89,10 @@ BSP_StatusTypeDef  BSP_WirelessCheck(void)
 	if(1 == gWrielessActionFlag && 0 == gMotorMachine.RunningState)
 	{
 		gWrielessActionFlag = 2;
+        
+        gLogInfo.uLogInfo.GateWay = 2;
+        bsp_LogWriteUpdataFlag();
+        
 		gWrielessModeFlag = 1;
 		wrielessGpioState = 0;
 		return state;
@@ -90,6 +102,10 @@ BSP_StatusTypeDef  BSP_WirelessCheck(void)
 	if(1 == gMotorMachine.RunningState)
 	{
 		gWrielessActionFlag = 1; //暂停
+        
+        gLogInfo.uLogInfo.GateWay = 1;
+        bsp_LogWriteUpdataFlag();
+        
 		gWrielessModeFlag = 1;	//处在遥控开闸模式
 		wrielessGpioState = 0;
 		return state;
@@ -113,17 +129,15 @@ BSP_StatusTypeDef  BSP_WirelessAction(void)
 			gMotorMachine.RunningState = 1;
 			gMotorMachine.RunDir = UPDIR;
 			BSP_MotorRun(UPDIR);
-			BSP_DAC5571_WriteValue(NormalOperationMode, 100);
-			/* 添加日志*/
+			BSP_DAC5571_WriteValue(NormalOperationMode, 60);
 			break;
 
 	    case 3:
 			gMotorMachine.RunningState = 1;
 			gMotorMachine.RunDir = DOWNDIR;
 			BSP_MotorRun(DOWNDIR);
-			BSP_DAC5571_WriteValue(NormalOperationMode, 80);
+			BSP_DAC5571_WriteValue(NormalOperationMode, 60);
 			//BSP_Log_UpOpenMode(3 + (gWrielessModeFlag << 4));
-            /* 添加日志*/
 			break;
 			
 	default:

@@ -1,17 +1,17 @@
-"E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Src\data.c"
+"F:\MyProject\BSPv2.2\BSPv2.2\Src\data.c"
 -std=c11
 -ferror-limit=0
 -fbracket-depth=512
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Inc
+F:\MyProject\BSPv2.2\BSPv2.2\EWARM/../Inc
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc
+F:\MyProject\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
+F:\MyProject\BSPv2.2\BSPv2.2\EWARM/../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Device/ST/STM32F1xx/Include
+F:\MyProject\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Device/ST/STM32F1xx/Include
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Include
+F:\MyProject\BSPv2.2\BSPv2.2\EWARM/../Drivers/CMSIS/Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\CMSIS\Core\Include
 -I
@@ -21,15 +21,15 @@ C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\inc\c
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Inc
+F:\MyProject\BSPv2.2\BSPv2.2\Inc
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc
+F:\MyProject\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
+F:\MyProject\BSPv2.2\BSPv2.2\Drivers\STM32F1xx_HAL_Driver\Inc\Legacy
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\CMSIS\Device\ST\STM32F1xx\Include
+F:\MyProject\BSPv2.2\BSPv2.2\Drivers\CMSIS\Device\ST\STM32F1xx\Include
 -I
-E:\Users\bertz\Documents\GitHub\BSPv2.2\BSPv2.2\Drivers\CMSIS\Include
+F:\MyProject\BSPv2.2\BSPv2.2\Drivers\CMSIS\Include
 -I
 C:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\arm\CMSIS\Core\Include
 -I

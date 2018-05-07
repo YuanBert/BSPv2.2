@@ -466,7 +466,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	if(htim3.Instance == htim->Instance)
 	{
 	  gHorGpio.CurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
-	  gVerGpio.CurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
 	  if(0 == gHorGpio.CurrentReadVal && 0 == gHorGpio.LastReadVal)
 	  {
 		gHorGpio.FilterCnt++;
@@ -485,6 +484,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 			gMotorMachine.RunDir = UPDIR;//修改方向标记位
 			gMotorMachine.RunningState = 0;//修改运行状态
 			gBarFirstArriveClosedPosionFlag = 1;//
+            gLogInfo.uLogInfo.GateWay = 0;
+            
+            if(0 == gWrielessModeFlag)
+            {
 			if(SettingVbaseValeFlag)
 			{
 			  gHorCloseFlag++;
@@ -494,6 +497,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 				SettingVbaseValeFlag = 0;
 			  }
 			}
+            }
 		  }		
 		}
 	  }
@@ -505,6 +509,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 	  }
       
 	  gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
+      
+      gVerGpio.CurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
 	  if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
 	  {
 		gVerGpio.FilterCnt++;
@@ -516,11 +522,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
 		  if(UPDIR == gMotorMachine.RunDir)
 		  {
 			BSP_MotorStop();
+            gWrielessActionFlag = 0;
 			gMotorMachine.RunDir = DOWNDIR;//修改方向标记位
 			gMotorMachine.RunningState = 0;//改变运行状态标记位
 			gOpenBarTimerFlag = 1;
 			gBarFirstArriveOpenedPosinFlag = 1;
-		  }		
+		  }
+          if(0 == gWrielessModeFlag)
+          {
 		  if(1 == gMotorMachine.StartFlag)	//如果初始位置在垂直位置，此可以进行自动复位
 		  {
 			BSP_MotorStop();
@@ -534,6 +543,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
           {
             gOpenFlag = 4;  
             gOpenBarTimeoutFlag = 2;
+          }
           }
 		}
 	  }
