@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
+<<<<<<< HEAD
     <fileChecksum>1090480210</fileChecksum>
     <configuration>
         <name>BSPv2.2</name>
@@ -58,8 +59,99 @@
             <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc_ex.h</file>
+=======
+    <fileChecksum>400425025</fileChecksum>
+    <configuration>
+        <name>BSPv2.2</name>
+        <outputs>
+            <file>$PROJ_DIR$\startup_stm32f103xe.s</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\i2c.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_pwr.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_rcc_ex.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_uart.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_spi_ex.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$PROJ_DIR$\..\Inc\bsp_motor.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_uart.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_flash.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_tim_ex.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_DataTransmissionLayer.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\adc.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\iccarm_builtin.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_adc.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_digitalfloodcontrol.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_DataTransmissionLayer.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\adc.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\usart.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\i2c.o</file>
+            <file>$PROJ_DIR$\..\Inc\spi.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_gpio_ex.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_flash.pbi</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_dma.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_tim.o</file>
+            <file>$PROJ_DIR$\..\Inc\bsp_digitalfloodcontrol.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\adc.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_msp.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_cortex.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\spi.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_rcc.o</file>
+            <file>$PROJ_DIR$\..\Inc\usart.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\system_stm32f1xx.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_gpio_ex.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\usart.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\system_stm32f1xx.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_gpio.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\List\BSPv2.2.map</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\main.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_dma.pbi</file>
+            <file>$TOOLKIT_DIR$\lib\m7M_tl.a</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_dac5571.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_spi_ex.pbi</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\main.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\usart.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_uart.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_adc.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_spi_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f1xx.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_DataTransmissionLayer.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cmFunc.h</file>
+            <file>$TOOLKIT_DIR$\lib\dl7M_tlf.a</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_adc_ex.o</file>
+            <file>$PROJ_DIR$\..\Inc\bsp_dac5571.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_cortex.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_msp.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_tim_ex.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\data.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\data.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\tim.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\spi.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_digitalfloodcontrol.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_rcc_ex.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_cortex.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc_ex.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_dac5571.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\dma.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_it.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_it.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\main.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_motor.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_digitalfloodcontrol.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\gpio.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\i2c.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_ProtocolLayer.o</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
             <file>$TOOLKIT_DIR$\inc\c\stdio.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Inc\bsp_ProtocolLayer.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_motor.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Exe\BSPv2.2.hex</file>
+            <file>$PROJ_DIR$\..\Inc\bsp_DataTransmissionLayer.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h</file>
+<<<<<<< HEAD
             <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
             <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h</file>
             <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\system_stm32f1xx.h</file>
@@ -154,16 +246,259 @@
                 <tool>
                     <name>ILINK</name>
                     <file> 81</file>
+=======
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_uart.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\startup_stm32f103xe.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_flash_ex.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_adc.pbi</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\system_stm32f1xx.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_dma_ex.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_adc.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_gpio_ex.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_cortex.pbi</file>
+            <file>$PROJ_DIR$\..\Inc\stm32f1xx_hal_conf.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\dma.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_tim_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_adc_ex.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\cmsis_iar.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_rcc_ex.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\lib\rt7M_tl.a</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_pwr.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_spi.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cmInstr.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\tim.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Device\ST\STM32F1xx\Include\stm32f103xe.h</file>
+            <file>$TOOLKIT_DIR$\lib\shb_l.a</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\spi.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\BSPv2.pbd</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_dma.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_i2c.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_tim.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\dma.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_spi.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\gpio.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_motor.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_i2c.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_spi.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_gpio.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_ProtocolLayer.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_adc_ex.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_gpio.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_flash.o</file>
+            <file>$PROJ_DIR$\..\Inc\i2c.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_i2c.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h</file>
+            <file>$PROJ_DIR$\..\Inc\tim.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_gpio_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_adc_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_pwr.o</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_dac5571.o</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
+            <file>$PROJ_DIR$\..\Src\bsp_digitalfloodcontrol.c</file>
+            <file>$PROJ_DIR$\..\Src\bsp_motor.c</file>
+            <file>$PROJ_DIR$\..\Src\bsp_ProtocolLayer.c</file>
+            <file>$PROJ_DIR$\..\Src\main.c</file>
+            <file>$PROJ_DIR$\..\Src\gpio.c</file>
+            <file>$PROJ_DIR$\..\Src\i2c.c</file>
+            <file>$PROJ_DIR$\..\Src\spi.c</file>
+            <file>$PROJ_DIR$\..\Src\usart.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc.c</file>
+            <file>$PROJ_DIR$\..\Src\bsp_DataTransmissionLayer.c</file>
+            <file>$PROJ_DIR$\..\Src\adc.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_i2c.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pwr.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio_ex.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc_ex.c</file>
+            <file>$PROJ_DIR$\..\Src\tim.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc_ex.c</file>
+            <file>$PROJ_DIR$\..\Src\dma.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal.c</file>
+            <file>$PROJ_DIR$\..\Inc\bsp_common.h</file>
+            <file>$PROJ_DIR$\..\Src\system_stm32f1xx.c</file>
+            <file>$PROJ_DIR$\..\Src\data.c</file>
+            <file>$PROJ_DIR$\..\Src\stm32f1xx_it.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_cortex.c</file>
+            <file>$PROJ_DIR$\..\Src\stm32f1xx_hal_msp.c</file>
+            <file>$PROJ_DIR$\..\Src\bsp_dac5571.c</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi_ex.c</file>
+            <file>$PROJ_DIR$\stm32f103xe_flash.icf</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_flash_ex.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_rcc.pbi</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h</file>
+            <file>$PROJ_DIR$\..\Inc\gpio.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_dma.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Inc\adc.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_spi.pbi</file>
+            <file>$PROJ_DIR$\..\Drivers\CMSIS\Include\core_cm3.h</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash_ex.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_msp.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_uart.c</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_tim.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_rcc.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\tim.o</file>
+            <file>$PROJ_DIR$\..\Inc\stm32f1xx_it.h</file>
+            <file>$PROJ_DIR$\..\Inc\main.h</file>
+            <file>$PROJ_DIR$\..\Inc\dma.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_flash_ex.__cstat.et</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\gpio.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Exe\BSPv2.2.out</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim_ex.c</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal_gpio.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal.o</file>
+            <file>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_i2c.h</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_hal.pbi</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\stm32f1xx_it.__cstat.et</file>
+            <file>$PROJ_DIR$\BSPv2.2\Obj\bsp_ProtocolLayer.__cstat.et</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+        </outputs>
+        <file>
+            <name>$PROJ_DIR$\startup_stm32f103xe.s</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 88</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 194 38</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Src\bsp_digitalfloodcontrol.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 63</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 16</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 75</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
-                    <name>ILINK</name>
-                    <file> 76 99 109 96 100 110 101 7 83 97 86 88 84 104 105 106 85 87 108 89 90 92 91 93 94 0 1 111 98 102 103 78 82 74 80</file>
+                    <name>ICCARM</name>
+                    <file> 26 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 165 134 84</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 79 44 52 101 14 165 6 127 202 85 189 66 71 100 128 134 84 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 26 22 93 182</file>
                 </tool>
             </inputs>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\Src\bsp_motor.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 82</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 118</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 74</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 7 165 189 44 97 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 55 130 134 179 84</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 132 108 67 85 181 182 127 189 179 55 50 6 106 71 91 139 101 44 165 134 84 97 133 121 24 29 94 122 198 86 116 176 87 79 66 52 14 202 22 93 7 100 128 130</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Src\bsp_ProtocolLayer.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 78</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 124</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 201</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 81 189 44 97 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 165 84</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 108 132 127 85 67 165 181 189 50 6 106 71 91 139 101 84 44 97 133 121 24 29 94 122 198 86 116 176 87 79 66 52 14 100 128 81 202 22 93 182</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Src\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 73</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 39</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 45</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+<<<<<<< HEAD
+                    <name>ILINK</name>
+                    <file> 76 99 109 96 100 110 101 7 83 97 86 88 84 104 105 106 85 87 108 89 90 92 91 93 94 0 1 111 98 102 103 78 82 74 80</file>
+=======
+                    <name>ICCARM</name>
+                    <file> 189 44 97 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 179 190 130 21 134 32 177 12 123 165 84 81 26 7 55</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 94 66 85 189 177 97 133 116 165 130 84 24 198 87 44 179 134 79 26 121 29 122 86 176 6 52 127 71 182 202 190 21 32 12 81 7 67 50 108 181 106 101 14 22 93 91 139 132 100 128 123 55</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
+                </tool>
+            </inputs>
+        </file>
+        <file>
+<<<<<<< HEAD
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
@@ -182,20 +517,98 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 15</file>
+=======
+            <name>$PROJ_DIR$\..\Src\gpio.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 76</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 117</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 193</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+                    <file> 177 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 139 122 127 85 121 176 71 91 29 86 50 6 106 101 44 97 133 24 94 198 116 87 67 108 181 132 189 79 66 52 14 202 100 128 177 22 93 182</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Src\i2c.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 20</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 77</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 1</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 2 3 39 36 38 37 107 95 58 59 50 55 62 54 61 64 65 69 47 46 51 52 66 67 70 71 53 68 57 41 42 43 63 56 45 48 49</file>
+=======
+                    <file> 130 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 177</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 189 66 85 71 127 79 44 6 52 101 14 202 182 177 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 22 93 130 100 128</file>
                 </tool>
             </inputs>
         </file>
         <file>
+            <name>$PROJ_DIR$\..\Src\spi.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 62</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 30</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 110</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 177</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 127 202 6 85 79 44 52 101 14 189 66 71 182 177 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 22 93 21 100 128</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
+                </tool>
+            </inputs>
+        </file>
+        <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi_ex.c</name>
             <outputs>
                 <tool>
@@ -205,20 +618,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 18</file>
+=======
+            <name>$PROJ_DIR$\..\Src\usart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 35</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 46</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 19</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 53 68 41 3 42 37 62 43 71 57 59 54 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 63 56 45 48 49</file>
+=======
+                    <file> 32 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 177 190</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 176 91 71 121 122 139 127 29 86 50 6 106 101 100 85 128 190 44 97 133 24 94 198 116 87 67 108 181 132 189 177 79 66 52 14 202 32 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\dma.c</name>
             <outputs>
                 <tool>
@@ -228,43 +665,87 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 5</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 48</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 90</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 15</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 60 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 59 62 71 57 53 68 37 41 3 42 43 54 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 63 56 60 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 122 139 121 176 71 91 29 86 50 6 106 127 85 97 133 24 94 198 116 87 67 108 181 132 101 189 79 44 66 52 14 100 128 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Src\main.c</name>
+            <name>$PROJ_DIR$\..\Src\bsp_DataTransmissionLayer.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 110</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 12</file>
+=======
+                    <file> 11</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 17</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 51</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 71 68 61 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51 44 60 79 73 77 75 40</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 67 54 71 40 52 66 70 79 3 44 77 38 37 2 59 50 55 62 68 60 73 75 61 64 107 65 36 69 95 47 39 46 58 51 53 57 41 42 63 56 43 45 48 49</file>
+=======
+                    <file> 84 189 44 97 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 165 32 177</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 85 181 67 108 132 189 93 177 165 50 6 106 71 91 139 101 127 22 32 44 97 133 121 24 29 94 122 198 86 116 176 87 79 66 52 14 202 182 84 100 128</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim_ex.c</name>
             <outputs>
                 <tool>
@@ -274,20 +755,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 6</file>
+=======
+            <name>$PROJ_DIR$\..\Src\adc.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 27</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 13</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 62 37 53 68 41 3 42 54 71 57 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 59 50 55 70 63 56 43 45 48 49</file>
+=======
+                    <file> 179 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 177 190</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 6 29 50 86 106 101 121 122 176 71 91 139 127 85 100 128 190 44 97 133 24 94 198 116 87 67 108 181 132 189 177 79 66 52 14 202 179 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc.c</name>
             <outputs>
                 <tool>
@@ -297,20 +802,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 14</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 112</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 40</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 178</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 95 55 107 58 59 50 36 39 38 37 2 62 54 61 64 65 69 47 46 51 52 66 67 70 3 71 53 68 57 41 42 63 56 43 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 29 50 6 86 106 101 121 122 176 71 91 139 127 85 97 133 24 94 198 116 87 67 108 181 132 189 79 44 66 52 14 202 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_cortex.c</name>
             <outputs>
                 <tool>
@@ -319,21 +848,44 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 129</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 23</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                     <file> 9</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 95 62 54 55 107 58 59 50 36 39 38 37 2 3 61 64 65 69 47 46 51 52 66 67 70 71 53 68 57 41 42 43 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 101 14 52 79 44 6 127 202 85 189 66 71 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\startup_stm32f103xe.s</name>
             <outputs>
                 <tool>
@@ -352,21 +904,75 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 28</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 89</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 174</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 191</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 79 44 52 101 14 6 127 202 85 189 66 71 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 100 128 22 93 182</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 126</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 196</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 37</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 75 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51 40 60</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 58 50 59 107 95 55 62 36 39 38 37 2 3 63 54 56 60 68 61 64 65 69 47 46 51 52 66 67 70 71 40 53 57 41 42 43 75 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 106 101 86 29 50 6 121 122 176 71 91 139 127 85 97 133 24 94 198 116 87 67 108 181 132 189 79 44 66 52 14 202 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\system_stm32f1xx.c</name>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_i2c.c</name>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
             <outputs>
                 <tool>
                     <name>ICCARM</name>
@@ -374,21 +980,38 @@
                 </tool>
                 <tool>
                     <name>BICOMP</name>
+<<<<<<< HEAD
                     <file> 16</file>
+=======
+                    <file> 119</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 131</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 38 66 67 37 59 62 50 55 70 2 3 42 41 57 68 61 71 64 54 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 53 66 67 70 59 62 37 2 50 55 3 71 43 54 68 57 41 42 61 64 107 65 36 69 95 47 39 46 58 51 52 38 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 6 71 91 79 44 52 139 127 85 189 66 101 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 132 100 128 14 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\i2c.c</name>
             <outputs>
                 <tool>
@@ -398,20 +1021,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 10</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pwr.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 137</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 2</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 104</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 79 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51 40</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 71 57 54 59 62 53 68 37 41 3 42 43 49 40 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 45 48 79 63 56</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 66 189 71 85 79 44 6 52 127 101 14 202 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pwr.c</name>
             <outputs>
                 <tool>
@@ -421,16 +1068,39 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 35</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 34</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 95</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 135</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 57 71 59 54 53 68 37 41 62 3 42 43 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 116 97 133 71 94 24 198 87 85 67 108 181 132 121 29 122 86 176 50 6 106 91 139 101 127 189 79 44 66 52 14 202 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
@@ -439,25 +1109,46 @@
             <outputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 92</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 25</file>
+=======
+                    <file> 3</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 64</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 102</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 69 61 64 46 65 47 51 54 52 66 67 70 107 36 95 39 58 38 37 2 59 50 55 3 62 71 53 68 57 41 42 43 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 94 79 44 97 133 116 52 101 14 24 198 87 6 127 202 85 121 29 122 86 176 66 71 189 67 50 108 181 106 91 139 132 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\spi.c</name>
             <outputs>
                 <tool>
@@ -467,20 +1158,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 8</file>
+=======
+            <name>$PROJ_DIR$\..\Src\tim.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 187</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 61</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 107</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 73 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51 40</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 62 43 37 54 53 68 41 3 42 71 57 59 49 40 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 45 48 73 63 56</file>
+=======
+                    <file> 134 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 122 139 127 85 121 176 71 91 29 86 50 6 106 101 44 97 133 24 94 198 116 87 67 108 181 132 189 79 66 52 14 202 100 128 134 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\adc.c</name>
             <outputs>
                 <tool>
@@ -490,43 +1205,87 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 11</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 120</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 180</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 105</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 44 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51 40 60</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 37 36 38 39 2 3 107 95 58 59 50 55 62 54 63 56 60 68 61 64 65 69 47 46 51 52 66 67 70 71 40 53 57 41 42 43 44 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 24 87 85 181 198 67 108 132 97 133 94 116 127 121 29 122 86 176 50 6 106 71 91 139 101 189 79 44 66 52 14 100 128 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Src\stm32f1xx_hal_msp.c</name>
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 108</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 13</file>
+=======
+                    <file> 31</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 175</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 186</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 95 55 62 54 107 58 59 50 36 39 38 37 2 3 61 64 65 69 47 46 51 52 66 67 70 71 53 68 57 41 42 43 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 198 127 24 87 6 97 133 94 116 79 44 52 101 14 85 121 29 122 86 176 66 189 67 50 108 181 106 71 91 139 132 100 128 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc.c</name>
             <outputs>
                 <tool>
@@ -536,20 +1295,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 20</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 54</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 125</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 136</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 52 47 66 70 65 51 54 67 61 64 69 46 62 107 36 95 39 58 38 37 2 59 50 55 3 71 53 68 57 41 42 63 56 43 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 189 66 127 85 79 44 6 52 101 14 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 71 91 139 132 100 128 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal.c</name>
             <outputs>
                 <tool>
@@ -559,20 +1342,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 31</file>
+=======
+            <name>$PROJ_DIR$\..\Src\dma.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 98</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 69</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 115</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 71 57 59 62 53 68 37 41 3 42 43 54 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 63 56 45 48 49</file>
+=======
+                    <file> 190 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 71 127 189 66 79 44 6 52 101 14 202 85 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 100 128 190 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_i2c.c</name>
             <outputs>
                 <tool>
@@ -582,20 +1389,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 22</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 197</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 199</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 80</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 37 59 50 53 68 41 55 62 54 71 57 3 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 70 63 56 42 43 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 189 66 71 127 79 44 6 52 101 14 202 85 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_uart.c</name>
             <outputs>
                 <tool>
@@ -605,20 +1436,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 21</file>
+=======
+            <name>$PROJ_DIR$\..\Src\system_stm32f1xx.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 33</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 36</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 92</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 71 57 62 54 53 68 37 41 3 42 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 59 50 55 70 63 56 43 45 48 49</file>
+=======
+                    <file> 50 108 181 6 71 127 91 139 132 106 101 14 52 66 44 97 189 133 85 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 79 108 181 132 71 127 6 106 91 139 101 189 202 85 44 66 52 14 97 133 121 24 29 94 122 198 86 116 176 87 67 50 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_adc_ex.c</name>
             <outputs>
                 <tool>
@@ -628,20 +1483,40 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 23</file>
+=======
+            <name>$PROJ_DIR$\..\Src\data.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 59</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 60</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 71 57 62 54 53 68 37 41 3 42 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 59 50 55 70 63 56 43 45 48 49</file>
+=======
+                    <file> 165 189 44 97 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 121 52 176 101 14 122 79 44 29 86 6 127 202 85 97 133 24 94 198 116 87 66 71 189 67 50 108 181 106 91 139 132 100 128 165 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\gpio.c</name>
             <outputs>
                 <tool>
@@ -651,20 +1526,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 19</file>
+=======
+            <name>$PROJ_DIR$\..\Src\stm32f1xx_it.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 70</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 72</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 200</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 40 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 55 95 62 54 107 58 59 50 36 39 38 37 2 3 68 61 64 65 69 47 46 51 52 66 67 70 71 53 57 41 42 43 63 56 40 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 188 84 165</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 86 106 101 29 50 6 121 122 176 71 91 139 127 85 188 97 133 24 94 198 116 87 67 108 181 132 189 84 79 44 66 52 14 202 100 128 22 93 182 165</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio_ex.c</name>
             <outputs>
                 <tool>
@@ -674,43 +1573,87 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 29</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_cortex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 56</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 96</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 65</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 46 61 64 59 69 65 47 51 54 52 66 67 70 107 36 95 39 58 38 37 2 50 55 3 62 71 53 68 57 41 42 43 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 122 127 85 139 121 176 71 91 29 86 50 6 106 101 97 133 24 94 198 116 87 67 108 181 132 189 79 44 66 52 14 202 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c</name>
+            <name>$PROJ_DIR$\..\Src\stm32f1xx_hal_msp.c</name>
             <outputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 84</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 32</file>
+=======
+                    <file> 28</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 57</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 183</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 36 38 37 39 2 3 107 95 58 59 50 55 62 54 61 64 65 69 47 46 51 52 66 67 70 71 53 68 57 41 42 43 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 122 139 127 85 121 176 71 91 29 86 50 6 106 101 97 133 24 94 198 116 87 67 108 181 132 189 79 44 66 52 14 202 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\tim.c</name>
             <outputs>
                 <tool>
@@ -720,20 +1663,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 33</file>
+=======
+            <name>$PROJ_DIR$\..\Src\bsp_dac5571.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 138</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 42</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 68</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 77 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 95 55 62 54 107 58 59 50 36 39 38 37 2 3 68 61 64 65 69 47 46 51 52 66 67 70 71 53 57 41 42 43 63 56 77 45 48 49</file>
+=======
+                    <file> 55 189 44 97 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87 165 130</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 133 130 97 116 94 66 71 100 85 128 24 198 87 44 121 29 122 86 176 79 6 52 127 101 14 202 189 165 67 50 108 181 106 91 139 132 55 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash_ex.c</name>
             <outputs>
                 <tool>
@@ -743,20 +1710,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 24</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 5</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 43</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 49</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 53 68 41 3 42 37 62 43 54 71 57 59 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 79 44 52 101 14 6 127 202 189 66 71 85 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 91 139 132 100 128 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Src\stm32f1xx_it.c</name>
             <outputs>
                 <tool>
@@ -766,20 +1757,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 26</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_uart.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 4</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 8</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 47</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51 72</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 59 54 71 57 72 53 68 37 41 62 3 42 43 38 61 64 107 65 36 69 95 47 39 46 58 51 52 66 67 2 50 55 70 63 56 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 189 66 127 85 79 44 6 52 101 14 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 71 91 139 132 100 128 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi.c</name>
             <outputs>
                 <tool>
@@ -789,20 +1804,44 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 17</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 25</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 185</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 114</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 65 51 54 67 47 52 66 70 61 64 69 46 62 107 36 95 39 58 38 37 2 59 50 55 3 71 53 68 57 41 42 63 56 43 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 6 127 91 79 44 52 139 85 189 66 101 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 71 132 100 128 14 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash.c</name>
             <outputs>
                 <tool>
@@ -812,20 +1851,37 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 34</file>
+=======
+            <name>$PROJ_DIR$\BSPv2.2\Exe\BSPv2.2.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 38</file>
+                </tool>
+                <tool>
+                    <name>OBJCOPY</name>
+                    <file> 83</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
+<<<<<<< HEAD
                     <name>ICCARM</name>
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 3 42 41 53 68 37 62 43 54 71 57 59 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 50 55 70 63 56 45 48 49</file>
+=======
+                    <name>ILINK</name>
+                    <file> 173 27 138 11 63 82 78 59 98 76 20 73 62 88 197 48 54 56 112 129 89 126 34 113 28 137 31 3 120 5 25 58 4 70 33 187 35 109 103 41 53</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>
         <file>
+<<<<<<< HEAD
             <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c</name>
             <outputs>
                 <tool>
@@ -835,16 +1891,39 @@
                 <tool>
                     <name>BICOMP</name>
                     <file> 4</file>
+=======
+            <name>$PROJ_DIR$\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim_ex.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 58</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 10</file>
+                </tool>
+                <tool>
+                    <name>__cstat</name>
+                    <file> 99</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICCARM</name>
+<<<<<<< HEAD
                     <file> 68 61 71 64 54 38 66 67 37 59 62 50 55 70 2 3 42 41 57 53 43 52 107 45 65 48 36 69 63 95 49 47 39 46 58 56 51</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
                     <file> 37 62 50 53 68 41 55 54 71 57 3 61 64 107 65 36 69 95 47 39 46 58 51 52 38 66 67 2 59 70 63 56 42 43 45 48 49</file>
+=======
+                    <file> 44 97 189 133 85 50 108 181 6 71 127 91 139 132 106 101 14 52 66 79 202 67 121 22 24 93 29 94 100 122 182 198 86 116 176 128 87</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 127 6 79 44 52 101 14 85 189 66 97 133 121 24 29 94 122 198 86 116 176 87 67 50 108 181 106 71 91 139 132 100 128 202 22 93 182</file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 </tool>
             </inputs>
         </file>

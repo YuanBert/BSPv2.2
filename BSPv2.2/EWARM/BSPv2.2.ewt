@@ -1199,6 +1199,30 @@
                 <name>$PROJ_DIR$\..\Src\adc.c</name>
             </file>
             <file>
+<<<<<<< HEAD
+=======
+                <name>$PROJ_DIR$\..\Inc\bsp_common.h</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_dac5571.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_DataTransmissionLayer.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_digitalfloodcontrol.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_motor.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\bsp_ProtocolLayer.c</name>
+            </file>
+            <file>
+                <name>$PROJ_DIR$\..\Src\data.c</name>
+            </file>
+            <file>
+>>>>>>> parent of 59fd819... 添加了日志信息上报信息，以及遥控开闸操作
                 <name>$PROJ_DIR$\..\Src\dma.c</name>
             </file>
             <file>

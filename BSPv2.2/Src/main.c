@@ -48,6 +48,24 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
+<<<<<<< HEAD
+=======
+#include "stdlib.h"
+#include "stdio.h"
+#include "bsp_common.h"
+#include "bsp_DataTransmissionLayer.h"
+#include "bsp_ProtocolLayer.h"
+#include "bsp_digitalfloodcontrol.h"
+#include "bsp_motor.h"
+
+#define REDLED_ON       HAL_GPIO_WritePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin,MCUAtmosphereLEDR_ON)
+#define REDLED_OFF		HAL_GPIO_WritePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin,MCUAtmosphereLEDR_OFF)
+#define REDLED_TOGGLE   HAL_GPIO_TogglePin(MCUAtmosphereLEDR_GPIO_Port,MCUAtmosphereLEDR_Pin)
+
+#define GREENLED_ON		HAL_GPIO_WritePin(MCUAtmosphereLEDG_GPIO_Port,MCUAtmosphereLEDG_Pin,MCUAtmosphereLEDG_ON)
+#define GREENLED_OFF	HAL_GPIO_WritePin(MCUAtmosphereLEDG_GPIO_Port,MCUAtmosphereLEDG_Pin,MCUAtmosphereLEDG_OFF)
+#define GREENLED_TOGGLE	HAL_GPIO_TogglePin(MCUAtmosphereLEDG_GPIO_Port,MCUAtmosphereLEDG_Pin)
+>>>>>>> parent of 59fd819... æ·»åŠ äº†æ—¥å¿—ä¿¡æ¯ä¸ŠæŠ¥ä¿¡æ¯ï¼Œä»¥åŠé¥æ§å¼€é—¸æ“ä½œ
 
 /* USER CODE END Includes */
 
@@ -55,6 +73,68 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+<<<<<<< HEAD
+=======
+extern volatile uint16_t       TiggerTimeCnt;
+extern  uint16_t       TiggerTimeSum;
+
+extern  uint16_t       Vnormalt;
+extern  uint16_t       Vthreshold;
+extern  uint16_t       Vbase;          //»ù´¡µçÁ÷Öµ
+extern  uint16_t       Vdelta;
+
+extern volatile uint16_t      VbaseBuffer[128];
+extern uint16_t      Vnormal;
+extern volatile uint16_t      VbaseCnt;
+extern volatile uint8_t       VbaseUpdataflag; 
+extern volatile uint8_t       SettingVbaseValeFlag;
+extern volatile uint8_t 	  gDigitalFoodFlag;
+
+extern uint16_t SpeedDataBufferPtr;
+extern uint8_t  SpeedDataBufferOne[300];
+
+MOTORMACHINE gMotorMachine;
+
+
+
+//volatile uint16_t ADCSampleBuffer[512];
+uint32_t ADCBuffer[32];
+
+volatile uint8_t  gLogTimerFlag;
+volatile uint32_t gLogTimerCnt;
+
+volatile uint8_t  gOpenBarTimeoutFlag;
+volatile uint8_t  gOpenBarTimerFlag;
+volatile uint32_t gOpenBarTimerCnt;
+
+volatile uint8_t gOpenSpeedTimerFlag;
+volatile uint8_t gOpenSpeedTimerCnt;
+
+volatile uint8_t gBarFirstArriveOpenedPosinFlag;
+volatile uint8_t gBarFirstArriveClosedPosionFlag;
+
+volatile uint8_t gOpenFlag;
+volatile uint8_t gObstructFlag;
+
+volatile uint8_t gHorCloseFlag;
+
+
+
+
+volatile uint8_t gCarEnteredFlag;
+GPIOSTRUCT gGentleSensorGpio;
+GPIOSTRUCT gAirSensorGpio;
+
+
+GPIOSTRUCT gHorGpio;
+GPIOSTRUCT gVerGpio;
+
+uint8_t gLedTimerFlag;
+
+
+
+static uint32_t Vadcdata;
+>>>>>>> parent of 59fd819... æ·»åŠ äº†æ—¥å¿—ä¿¡æ¯ä¸ŠæŠ¥ä¿¡æ¯ï¼Œä»¥åŠé¥æ§å¼€é—¸æ“ä½œ
 
 /* USER CODE END PV */
 
@@ -114,7 +194,21 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+<<<<<<< HEAD
 
+=======
+  BSP_MotorInit();
+  bsp_GpioStructInit();
+  DigitalfloodInit();
+  
+  BSP_DriverBoardProtocolInit();
+  //HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&ADCBuffer, 256);
+  //HAL_ADC_Stop_DMA(&hadc1);
+  
+  HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_Base_Start_IT(&htim5);
+  
+>>>>>>> parent of 59fd819... æ·»åŠ äº†æ—¥å¿—ä¿¡æ¯ä¸ŠæŠ¥ä¿¡æ¯ï¼Œä»¥åŠé¥æ§å¼€é—¸æ“ä½œ
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -125,7 +219,127 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+<<<<<<< HEAD
 
+=======
+    /*bsp_ADCCheck();
+    HAL_Delay(10);
+    */
+      
+  
+  BSP_HandingUartDataFromDriverBoard();
+  BSP_HandingDriverBoardRequest();
+  BSP_SendAckData();
+
+  /* ·ÕÎ§µÆ¿ØÖÆ */
+  if(1 == gLedTimerFlag)
+  {
+	gLedTimerFlag = 0;
+	if(0 == gOpenFlag)
+	{
+		REDLED_ON;
+		GREENLED_OFF;
+	}
+	if(2 == gOpenFlag)
+	{
+		REDLED_OFF;
+		GREENLED_TOGGLE;
+	}
+	if(3 == gOpenFlag)
+	{
+		REDLED_OFF;
+		GREENLED_ON;
+	}
+	if(5 == gOpenFlag)
+	{
+		REDLED_TOGGLE;
+		GREENLED_OFF;
+	}
+  }
+  
+
+  /* ·¢ËÍÈÕÖ¾ĞÅÏ¢ */
+  if(1 == gLogTimerFlag)
+  {
+	gLogTimerFlag = 0;
+#ifdef __Debug__
+    BSP_SendDataToDriverBoard((uint8_t*)"\r\n Timelog \r\n",13,0xFFFF);
+#endif
+  }
+  
+
+  /* ¼ì²â³µÁ¾ÊÇ·ñÈë³¡»òÕß³ö³¡ĞÅÏ¢ */
+  if(1 == gCarEnteredFlag)
+  {
+	if(3 == gOpenFlag)
+	{
+		gCarEnteredFlag = 0;
+		gOpenBarTimeoutFlag = 0;
+		gOpenBarTimerCnt = 0;
+		gOpenBarTimerFlag = 0;
+		gOpenFlag = 4;
+		/* ·¢ËÍ³µÁ¾Èë³¡»òÕß³ö³¡ĞÅÏ¢ */
+		bsp_SendCarEnterFlag();
+	}
+  }
+
+  if(1 == gBarFirstArriveOpenedPosinFlag)
+  {
+    gBarFirstArriveOpenedPosinFlag = 0;
+	if(2 == gOpenFlag)
+	{
+		gOpenFlag = 3;
+		VbaseCnt = 0;
+		TiggerTimeCnt = 0;
+	}
+	SpeedDataBufferPtr = 0;
+#ifdef __Debug__
+	//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveOpenedPosinFlag \r\n",35,0xFFFF);
+#endif
+  }
+
+  if(1 == gBarFirstArriveClosedPosionFlag)
+  {
+	gBarFirstArriveClosedPosionFlag = 0;
+	if(2 == gOpenBarTimeoutFlag)
+	{
+		gOpenBarTimeoutFlag = 0;
+		/* ·¢ËÍ³µÁ¾Èë³¡»òÕß³ö³¡³¬Ê±ĞÅÏ¢ */
+		bsp_SendCarEnterTimeroutFlag();
+	}
+	/* ¸üĞÂVbaseµÄÊı¾İÖµ */
+	UpdateVbaseValue();
+	SpeedDataBufferPtr = 0;
+#ifdef	__Debug__
+	//BSP_SendDataToDriverBoard((uint8_t*)"\r\n gBarFirstArriveClosedPosionFlag\r\n",35, 0xFFFF);
+#endif
+  }
+
+
+  
+
+  BSP_MotorCheck();
+  BSP_MotorAction();
+  
+  if(1 == gOpenSpeedTimerFlag && 2 == gOpenFlag)
+  {
+      gOpenSpeedTimerFlag = 0;
+
+	  /* Ìí¼Óµ÷ËÙ´úÂë */
+	  BSP_MotorSpeedSet(SpeedDataBufferOne[SpeedDataBufferPtr]);
+	  
+#ifdef __Debug__
+	  BSP_SendByteToDriverBoard(SpeedDataBufferOne[SpeedDataBufferPtr],0xFFFF);
+#endif
+
+	  SpeedDataBufferPtr++;
+	  if(SpeedDataBufferPtr > 299)
+	  {
+		SpeedDataBufferPtr = 299;
+	  } 
+  }
+	
+>>>>>>> parent of 59fd819... æ·»åŠ äº†æ—¥å¿—ä¿¡æ¯ä¸ŠæŠ¥ä¿¡æ¯ï¼Œä»¥åŠé¥æ§å¼€é—¸æ“ä½œ
   }
   /* USER CODE END 3 */
 
@@ -234,6 +448,324 @@ static void MX_NVIC_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+<<<<<<< HEAD
+=======
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef * htim)
+{
+	UNUSED(htim);
+        /* ³£¿ªµÄ¶¨Ê±Æ÷ÖĞ¶Ï£¬50us½øÈëÒ»´Î£¬¶Ô¹âÕ¤×´Ì¬½øĞĞ¼ì²â */
+	if(htim3.Instance == htim->Instance)
+	{
+	  gHorGpio.CurrentReadVal = HAL_GPIO_ReadPin(HorRasterInput_GPIO_Port,HorRasterInput_Pin);
+	  gVerGpio.CurrentReadVal = HAL_GPIO_ReadPin(VerRasterInput_GPIO_Port,VerRasterInput_Pin);
+	  if(0 == gHorGpio.CurrentReadVal && 0 == gHorGpio.LastReadVal)
+	  {
+		gHorGpio.FilterCnt++;
+		if(gHorGpio.FilterCnt > gHorGpio.FilterCntSum)
+		{
+		  gMotorMachine.HorizontalRasterState = 1;
+		  gHorGpio.GpioState = 1;
+		  gHorGpio.FilterCnt = 0;	
+		  if(DOWNDIR == gMotorMachine.RunDir)
+		  {
+			HAL_TIM_Base_Stop_IT(&htim6);//Í£Ö¹¶¨Ê±Æ÷ÖĞ¶Ï
+            HAL_ADC_Stop_DMA(&hadc1);
+			BSP_MotorStop(); //Í£Ö¹µç»ú×ª¶¯
+            HAL_TIM_Base_Stop_IT(&htim4);
+			gOpenFlag = 0;
+			gMotorMachine.RunDir = UPDIR;//ĞŞ¸Ä·½Ïò±ê¼ÇÎ»
+			gMotorMachine.RunningState = 0;//ĞŞ¸ÄÔËĞĞ×´Ì¬
+			gBarFirstArriveClosedPosionFlag = 1;//
+			if(SettingVbaseValeFlag)
+			{
+			  gHorCloseFlag++;
+			  if(gHorCloseFlag > 2)
+			  {
+				gHorCloseFlag = 0;
+				SettingVbaseValeFlag = 0;
+			  }
+			}
+		  }		
+		}
+	  }
+	  else
+	  {
+		gMotorMachine.HorizontalRasterState = 0;
+		gHorGpio.GpioState = 0;
+		gHorGpio.FilterCnt = 0;
+	  }
+      
+	  gHorGpio.LastReadVal = gHorGpio.CurrentReadVal;
+	  if(0 == gVerGpio.CurrentReadVal && 0 == gVerGpio.LastReadVal)
+	  {
+		gVerGpio.FilterCnt++;
+		if(gVerGpio.FilterCnt > gVerGpio.FilterCntSum)
+		{
+		  gVerGpio.GpioState = 1;
+		  gVerGpio.FilterCnt = 0;
+		  gMotorMachine.VerticalRasterState = 1;
+		  if(UPDIR == gMotorMachine.RunDir)
+		  {
+			BSP_MotorStop();
+			gMotorMachine.RunDir = DOWNDIR;//ĞŞ¸Ä·½Ïò±ê¼ÇÎ»
+			gMotorMachine.RunningState = 0;//¸Ä±äÔËĞĞ×´Ì¬±ê¼ÇÎ»
+			gOpenBarTimerFlag = 1;
+			gBarFirstArriveOpenedPosinFlag = 1;
+		  }		
+		  if(1 == gMotorMachine.StartFlag)	//Èç¹û³õÊ¼Î»ÖÃÔÚ´¹Ö±Î»ÖÃ£¬´Ë¿ÉÒÔ½øĞĞ×Ô¶¯¸´Î»
+		  {
+			BSP_MotorStop();
+            gMotorMachine.StartFlag = 0;
+			gOpenBarTimerFlag = 1;
+			gOpenFlag = 3;	//±íÊ¾´¦ÔÚ´¹Ö±Î»ÖÃ
+			VbaseCnt = 0;   //¹éÁã¼ÆÊı
+			TiggerTimeCnt = 0;//
+		  }
+          if(1 == gOpenBarTimeoutFlag)
+          {
+            gOpenFlag = 4;  
+            gOpenBarTimeoutFlag = 2;
+          }
+		}
+	  }
+	  else
+	  {
+		gMotorMachine.VerticalRasterState = 0;
+		gVerGpio.GpioState = 0;
+		gVerGpio.FilterCnt = 0;
+	  }
+	  gVerGpio.LastReadVal = gVerGpio.CurrentReadVal;
+	  return;
+	}
+        
+   	/* ·Ç³£¿ªµÄ¶¨Ê±Æ÷ÖĞ¶Ï£¬¸ÃÖĞ¶ÏÔÚ½ÓÊÕµ½¿ªÕ¢Ö¸Áîºó²Å´ò¿ª£¬ÓÃÀ´¼ì²âµØ¸ĞºÍ
+	Ñ¹Á¦²¨´«¸ĞÆ÷ĞÅºÅ£¬ÔÚ¼ì²âµ½¸Ëµ½´ïË®Æ½Î»ÖÃÖ®ºó¾ÍÖ±½Ó¹Ø±Õ¸ÃÖĞ¶Ï£¬¸ÃÖĞ¶ÏÃ¿1ms
+	½øÈëÒ»´Î£¬¿ªÕ¢µÄµ÷ËÙÒ²½«ÔÚ¸ÄÖĞ¶ÏÖĞÍê³É*/
+	if(htim4.Instance == htim->Instance)
+	{
+	  /* µ÷ËÙ */
+	  gOpenSpeedTimerCnt ++;
+	  if(gOpenSpeedTimerCnt > 4)    //5ms½øÈëÒ»´Îµ÷ËÙÖĞ¶Ï
+	  {
+		gOpenSpeedTimerFlag = 1;
+		gOpenSpeedTimerCnt = 0;
+	  }   
+		/* µØ¸Ğ¼ì²â£¬Æğµ½·ÀÔÒºÍÅĞ¶Ï³µÁ¾ÊÇ·ñ½øÈëµÄ×÷ÓÃ */
+	  gGentleSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(GentleSensor_GPIO_Port,GentleSensor_Pin);
+	  if(0 == gGentleSensorGpio.CurrentReadVal && 0 == gGentleSensorGpio.LastReadVal)
+	  {
+		if(0 == gGentleSensorGpio.GpioState)
+		{
+		  gGentleSensorGpio.FilterCnt++;
+		  if(gGentleSensorGpio.FilterCnt > gGentleSensorGpio.FilterCntSum)
+		  {
+			gGentleSensorGpio.GpioState = 1;
+			gGentleSensorGpio.FilterCnt = 0;
+			/* Ìí¼ÓÈÕÖ¾ÎÄµµ       */		
+		  }
+		}
+	  }
+	  else
+	  {
+		if(gGentleSensorGpio.GpioState)
+		{
+		  gCarEnteredFlag = 1;	
+		  /* Ìí¼ÓÈÕÖ¾ÎÄµµ */
+		}
+		gGentleSensorGpio.GpioState = 0;
+		gGentleSensorGpio.FilterCnt = 0;
+		gGentleSensorGpio.LastReadVal = gGentleSensorGpio.CurrentReadVal;
+		/* ¿ÕÆø²¨¼ì²â */
+
+		gAirSensorGpio.CurrentReadVal = HAL_GPIO_ReadPin(MCU_AIR_GPIO_Port,MCU_AIR_Pin);
+		if(0 == gAirSensorGpio.CurrentReadVal && 0 == gAirSensorGpio.LastReadVal)
+		{
+			if(0 == gAirSensorGpio.GpioState)
+			{
+				gAirSensorGpio.FilterCnt++;
+				if(gAirSensorGpio.FilterCnt > gAirSensorGpio.FilterCntSum)
+				{
+					gAirSensorGpio.GpioState = 1;
+					gAirSensorGpio.FilterCnt = 0;
+					/* Ğ´ÈÕÖ¾ĞÅÏ¢ */
+				}
+			}
+		}
+		else
+		{
+			if(1 == gAirSensorGpio.GpioState)
+			{
+				gAirSensorGpio.GpioState = 0;
+				/* Ğ´ÈÕÖ¾ĞÅÏ¢ */
+			}
+			gAirSensorGpio.FilterCnt = 0;
+		}
+	  }
+	  return;
+	}
+        
+        
+    /* ³£¿ªÖĞ¶Ï£¬Ã¿200ms½øÈëÒ»´Î£¬ÓÃÒÔ¶ÔlogÈÕÖ¾½øĞĞÉÏ±¨£¬ÏµÍ³×Ô¼ìµÈ¹¦ÄÜ£¬Í¬Ê±
+    Ò²À´¼æ¹ËÀ´³µ¿ØµÆµÄ×÷ÓÃ */
+	if(htim5.Instance == htim->Instance)
+	{
+	  gLedTimerFlag = 1;
+	  gLogTimerCnt++;
+	  if(gLogTimerCnt > 50)
+	  {
+		gLogTimerFlag = 1;
+		gLogTimerCnt = 0;
+	  }	
+	  if(1 == gOpenBarTimerFlag)
+	  {
+		gOpenBarTimerCnt++;
+		if(gOpenBarTimerCnt > 60)	//µÈ´ıÊ±¼äÎª6ÃëÖÓ£¬³¬¹ı6ÃëÖÓÈÏÎªÊÇ³¬Ê±
+		{
+		  gOpenBarTimeoutFlag = 1;
+		  gOpenBarTimerCnt = 0;
+		  gOpenBarTimerFlag = 0;
+		}
+	  }
+	  return;
+	}
+        
+        
+        
+    /* ´Ë¶¨Ê±Æ÷ÖĞ¶ÏÖ»ÓĞ¹ØÕ¢µÄÊ±ºò²Å»áÆğ×÷ÓÃ£¬¿ªÆôÖĞ¶ÏºóÃ¿10ms½øÈëÒ»´Î */
+	if(htim6.Instance == htim->Instance)
+	{
+	  bsp_ADCCheck();
+	}	
+}
+
+
+void bsp_SendCarEnterFlag(void)
+{
+	uint8_t pData[7];
+	pData[0] = 0x5B;
+	pData[1] = 0xE3;
+	pData[3] = 0x00;
+	pData[4] = 0x00;
+	pData[6] = 0x5D;
+	pData[2] = 0x00;
+	pData[5] = 0xE3;
+	BSP_SendDataToDriverBoard(pData,7,0xFFFF);
+	return ;
+}
+void bsp_SendCarEnterTimeroutFlag(void)
+{
+	uint8_t pData[7];
+	pData[0] = 0x5B;
+	pData[1] = 0xE3;
+	pData[3] = 0x00;
+	pData[4] = 0x00;
+	pData[6] = 0x5D;
+	pData[2] = 0x01;
+	pData[5] = 0xE2;
+	BSP_SendDataToDriverBoard(pData,7,0xFFFF);
+	return;
+}
+void bsp_GpioStructInit(void)
+{
+	gVerGpio.LastReadVal = 0;
+	gVerGpio.FilterCnt = 0;
+	gVerGpio.GpioState = 0;
+	gVerGpio.FilterCntSum = 19;
+
+
+	gHorGpio.LastReadVal = 0;
+	gHorGpio.FilterCnt = 0;
+	gHorGpio.GpioState = 0;
+	gHorGpio.FilterCntSum = 19;
+
+	gGentleSensorGpio.LastReadVal = 0;
+	gGentleSensorGpio.FilterCnt = 0;
+	gGentleSensorGpio.GpioState = 0;
+	gGentleSensorGpio.FilterCntSum = 25;
+
+	gAirSensorGpio.CurrentReadVal = 0;
+	gAirSensorGpio.LastReadVal = 0;
+	gAirSensorGpio.GpioState = 0;
+	gAirSensorGpio.FilterCnt = 0;
+	gAirSensorGpio.FilterCntSum = 10;
+
+	gBarFirstArriveOpenedPosinFlag = 0;
+	gBarFirstArriveClosedPosionFlag = 0;
+}
+void  bsp_ADCCheck()
+{
+   uint16_t i;
+   //uint8_t VbaseValueBuffer[4];
+   //char sBuffer[10];
+   if(5!= gOpenFlag)
+   {
+      return;
+   }
+  
+   for(i = 0,Vadcdata = 0; i < 32;i++)
+   {
+           Vadcdata += ADCBuffer[i];
+	}
+	Vnormal = (uint16_t)(Vadcdata >> 5);
+    if(0 == SettingVbaseValeFlag)
+    {
+      if(Vnormal > Vbase)
+      {
+        Vdelta = Vnormal - Vbase;
+      }
+      else
+      {
+        Vdelta = Vbase - Vnormal;                           
+      }
+      if(Vdelta > Vthreshold)
+      {
+        TiggerTimeCnt++;
+      }
+      else
+      {
+        TiggerTimeCnt = 0;
+      } 
+    }
+	  
+    if(3 > TiggerTimeCnt)
+    {	
+      if(VbaseCnt > 128) //Èç¹û²ÉÑù³¬¹ı128¸öµãÔò¶ªÆú
+      {
+        VbaseCnt = 0;
+      }
+      VbaseBuffer[VbaseCnt++] = Vnormal;
+    }
+    else
+    {
+      VbaseCnt = 0;
+    }              
+#ifdef __Debug__
+    //sprintf(sBuffer,"\r\nBB%4dBB\r\n",Vnormal);
+//	VbaseValueBuffer[0] = 0xBB;
+//	VbaseValueBuffer[1] = Vnormal >> 8;
+//	VbaseValueBuffer[2] = Vnormal;
+//	VbaseValueBuffer[3] = 0xBB;
+//	BSP_SendDataToDriverBoard(VbaseValueBuffer,4,0xFFFF);
+    //BSP_SendDataToDriverBoard((uint8_t*)sBuffer,sizeof(sBuffer),0xFFFF);
+#endif	
+  Vnormal = 0;
+}
+/**
+  * @brief  Conversion complete callback in non blocking mode 
+  * @param  hadc: ADC handle
+  * @retval None
+  */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+  /* Prevent unused argument(s) compilation warning */
+  UNUSED(hadc);
+  /* NOTE : This function should not be modified. When the callback is needed,
+            function HAL_ADC_ConvCpltCallback must be implemented in the user file.
+   */
+	//bsp_ADCCheck();
+}
+
+>>>>>>> parent of 59fd819... æ·»åŠ äº†æ—¥å¿—ä¿¡æ¯ä¸ŠæŠ¥ä¿¡æ¯ï¼Œä»¥åŠé¥æ§å¼€é—¸æ“ä½œ
 
 /* USER CODE END 4 */
 
