@@ -61,8 +61,8 @@
 #define Radar_TX_GPIO_Port GPIOA
 #define Radar_RX_Pin GPIO_PIN_3
 #define Radar_RX_GPIO_Port GPIOA
-#define W25Q64_CS_Pin GPIO_PIN_5
-#define W25Q64_CS_GPIO_Port GPIOA
+#define W25Q64_SCK_Pin GPIO_PIN_5
+#define W25Q64_SCK_GPIO_Port GPIOA
 #define W25Q64_MISO_Pin GPIO_PIN_6
 #define W25Q64_MISO_GPIO_Port GPIOA
 #define W25Q64_MOSI_Pin GPIO_PIN_7
@@ -114,7 +114,6 @@
 /* #define USE_FULL_ASSERT    1U */
 
 /* USER CODE BEGIN Private defines */
-
 
 /* USER CODE END Private defines */
 

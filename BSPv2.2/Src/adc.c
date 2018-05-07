@@ -45,11 +45,6 @@
 
 /* USER CODE BEGIN 0 */
 
-
-void ADCCallback(DMA_HandleTypeDef * hdma)
-{
-    
-}
 /* USER CODE END 0 */
 
 ADC_HandleTypeDef hadc1;

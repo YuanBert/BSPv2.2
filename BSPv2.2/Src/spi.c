@@ -88,7 +88,7 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     PA6     ------> SPI1_MISO
     PA7     ------> SPI1_MOSI 
     */
-    GPIO_InitStruct.Pin = W25Q64_CS_Pin|W25Q64_MOSI_Pin;
+    GPIO_InitStruct.Pin = W25Q64_SCK_Pin|W25Q64_MOSI_Pin;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -120,7 +120,7 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     PA6     ------> SPI1_MISO
     PA7     ------> SPI1_MOSI 
     */
-    HAL_GPIO_DeInit(GPIOA, W25Q64_CS_Pin|W25Q64_MISO_Pin|W25Q64_MOSI_Pin);
+    HAL_GPIO_DeInit(GPIOA, W25Q64_SCK_Pin|W25Q64_MISO_Pin|W25Q64_MOSI_Pin);
 
   /* USER CODE BEGIN SPI1_MspDeInit 1 */
 
