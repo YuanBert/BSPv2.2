@@ -259,7 +259,7 @@ int main(void)
 	gLogTimerFlag = 0;
     bsp_LogWriteUpdataFlag();
 #ifdef __Debug__
-    BSP_SendDataToDriverBoard((uint8_t*)"\r\n Timelog \r\n",13,0xFFFF);
+    //BSP_SendDataToDriverBoard((uint8_t*)"\r\n Timelog \r\n",13,0xFFFF);
 #endif
   }
   

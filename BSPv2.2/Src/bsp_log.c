@@ -42,7 +42,7 @@ void bsp_LogCheckUpdata(void)
     uint8_t i;
     if(1 == UpdataFlag)
 	{
-        HeadBuffer[0] = 0x53;
+        HeadBuffer[0] = 0x5B;
         HeadBuffer[1] = 0xD2;
         HeadBuffer[2] = 0x01;
         HeadBuffer[3] = 0x00;
